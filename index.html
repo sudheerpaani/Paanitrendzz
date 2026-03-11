@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paanitrendzz – India Ka Trending Store 🇮🇳</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#080E1A;--navy2:#0D1B30;--navy3:#112240;
+  --teal:#00E5C8;--teal2:#00b8a0;--tealg:rgba(0,229,200,.14);
+  --saffron:#FF9500;--saff2:#e07800;--saffg:rgba(255,149,0,.12);
+  --white:#F0F8FF;--gray:#7A8599;--card:#0F1E35;--card2:#162540;
+  --bdr:rgba(0,229,200,.12);--green:#22C55E;--red:#EF4444;--gold:#FFD700;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ANN */
+.ann{background:linear-gradient(90deg,#7a3800,var(--saffron),#ff6200,var(--saffron),#7a3800);
+  background-size:400%;animation:annA 7s linear infinite;
+  color:#fff;font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;
+  letter-spacing:.06em;padding:9px 10px;text-align:center;overflow:hidden}
+@keyframes annA{0%{background-position:0%}100%{background-position:400%}}
+.ann strong{background:rgba(0,0,0,.28);padding:2px 9px;border-radius:4px;margin:0 5px}
+
+/* HDR */
+header{position:sticky;top:0;z-index:950;background:rgba(8,14,26,.97);
+  backdrop-filter:blur(22px);border-bottom:1px solid var(--bdr);
+  padding:0 4%;display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.logo{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  letter-spacing:-.03em;display:flex;align-items:center;gap:5px}
+.logo .t{color:var(--teal)}.logo .flag{font-size:.85rem}
+nav{display:flex;align-items:center;gap:22px}
+nav a{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--gray);transition:color .2s}
+nav a:hover{color:var(--teal)}
+.nav-fire{color:var(--saffron)!important;border:1px solid var(--saffron);
+  padding:4px 13px;border-radius:18px;animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{from{box-shadow:0 0 4px rgba(255,149,0,.3)}to{box-shadow:0 0 14px rgba(255,149,0,.7)}}
+.srch{display:flex;align-items:center;background:var(--card2);border:1px solid var(--bdr);
+  border-radius:22px;padding:7px 14px;gap:7px;width:190px;transition:all .2s}
+.srch:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px var(--tealg)}
+.srch input{background:none;border:none;outline:none;color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.8rem;width:100%}
+.srch input::placeholder{color:var(--gray)}
+.hdr-r{display:flex;align-items:center;gap:9px}
+.cart-btn{position:relative;width:38px;height:38px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:border-color .2s}
+.cart-btn:hover{border-color:var(--teal)}
+.cc{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;
+  font-size:.5rem;font-weight:800;width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif}
+.btn-teal{background:var(--teal);color:var(--navy);font-family:'Syne',sans-serif;
+  font-weight:800;font-size:.76rem;letter-spacing:.04em;padding:9px 18px;border-radius:22px;
+  border:none;cursor:pointer;white-space:nowrap;transition:all .2s}
+.btn-teal:hover{background:var(--teal2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,200,.3)}
+.admin-lnk{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+  color:var(--saffron);border:1px solid rgba(255,149,0,.4);padding:7px 14px;border-radius:18px;transition:all .2s}
+.admin-lnk:hover{background:var(--saffg)}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:60px 4%}
+.hero-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse 65% 55% at 68% 50%,rgba(0,229,200,.09) 0%,transparent 60%),
+    radial-gradient(ellipse 30% 40% at 10% 85%,rgba(255,149,0,.07) 0%,transparent 55%),
+    radial-gradient(ellipse 20% 25% at 80% 10%,rgba(255,215,0,.05) 0%,transparent 50%),var(--navy)}
+.hero-grid{position:absolute;inset:0;opacity:.025;
+  background-image:linear-gradient(var(--teal) 1px,transparent 1px),linear-gradient(90deg,var(--teal) 1px,transparent 1px);
+  background-size:48px 48px}
+.hero-c{position:relative;z-index:2;max-width:560px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--saffg);
+  border:1px solid var(--saffron);border-radius:30px;padding:6px 16px;
+  font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--saffron);margin-bottom:22px;animation:fup .6s ease both}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--saffron);animation:pd 1.5s infinite}
+@keyframes pd{0%{box-shadow:0 0 0 0 rgba(255,149,0,.7)}70%{box-shadow:0 0 0 8px rgba(255,149,0,0)}100%{box-shadow:0 0 0 0 rgba(255,149,0,0)}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.7rem,6vw,5rem);
+  font-weight:800;line-height:1;letter-spacing:-.04em;margin-bottom:10px;animation:fup .6s .1s ease both}
+.hero h1 .tc{color:var(--teal)}.hero h1 .ts{color:var(--saffron)}
+.hero-hin{font-size:.98rem;color:rgba(255,149,0,.8);font-style:italic;
+  margin-bottom:18px;animation:fup .6s .18s ease both}
+.hero p{font-size:1rem;color:var(--gray);line-height:1.8;max-width:460px;
+  margin-bottom:32px;animation:fup .6s .26s ease both}
+.hero-btns{display:flex;gap:12px;align-items:center;flex-wrap:wrap;animation:fup .6s .34s ease both}
+.btn-saff{background:var(--saffron);color:#fff;font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.85rem;letter-spacing:.04em;padding:13px 26px;border-radius:50px;
+  border:none;cursor:pointer;transition:all .2s}
+.btn-saff:hover{background:var(--saff2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,149,0,.35)}
+.btn-outline{color:var(--teal);font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;
+  border:1px solid var(--teal);padding:13px 22px;border-radius:50px;transition:all .2s;cursor:pointer}
+.btn-outline:hover{background:var(--tealg)}
+.hero-vis{position:absolute;right:3%;top:50%;transform:translateY(-50%);
+  width:43%;max-width:550px;animation:fup .9s .15s ease both}
+.hmc{background:var(--card);border:1px solid var(--bdr);border-radius:22px;overflow:hidden}
+.hmc-img{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:8rem;
+  background:linear-gradient(135deg,#0d1e38,#1a3050,#0a2a20);position:relative;overflow:hidden}
+.hmc-img::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 35% 40%,rgba(0,229,200,.12) 0%,transparent 55%)}
+.hmc-img::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 70% 70%,rgba(255,215,0,.1) 0%,transparent 45%);
+  animation:flicker 2.5s ease-in-out infinite alternate}
+@keyframes flicker{0%{opacity:.6}50%{opacity:1}100%{opacity:.75}}
+.ftag{position:absolute;top:14px;left:14px;background:var(--saffron);color:#fff;
+  font-family:'Syne',sans-serif;font-size:.64rem;font-weight:800;
+  padding:4px 12px;border-radius:20px;letter-spacing:.07em;z-index:2}
+.hmc-info{padding:15px 18px;display:flex;align-items:center;justify-content:space-between}
+.hmc-info h3{font-family:'Syne',sans-serif;font-size:.93rem;font-weight:700}
+.hmc-info .pr{color:var(--teal);font-weight:800;font-size:.98rem;font-family:'Syne',sans-serif}
+.hmc-info .pr::before{content:'₹';font-size:.76rem}
+.mini-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mc{background:var(--card);border:1px solid var(--bdr);border-radius:13px;
+  padding:12px;display:flex;align-items:center;gap:10px}
+.mc .em{font-size:1.9rem;flex-shrink:0}
+.mc strong{font-family:'Syne',sans-serif;font-size:.81rem;display:block}
+.mc p{font-size:.67rem;color:var(--gray)}
+@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* TRUST */
+.trust{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+  background:var(--navy2);padding:14px 4%;
+  display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:14px}
+.ti{display:flex;align-items:center;gap:8px;font-size:.77rem;color:var(--gray);
+  font-family:'Syne',sans-serif;font-weight:600;letter-spacing:.04em}
+
+/* PAY STRIP */
+.paystrip{background:linear-gradient(90deg,rgba(255,149,0,.05),rgba(0,229,200,.05));
+  border-bottom:1px solid var(--bdr);padding:11px 4%;
+  display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.psl{font-family:'Syne',sans-serif;font-size:.67rem;font-weight:700;
+  color:var(--gray);letter-spacing:.1em;text-transform:uppercase}
+.pm{background:var(--card2);border:1px solid var(--bdr);border-radius:7px;
+  padding:5px 12px;font-family:'Syne',sans-serif;font-size:.71rem;font-weight:700;
+  display:flex;align-items:center;gap:5px}
+.pm.u{color:var(--saffron);border-color:rgba(255,149,0,.22)}
+.pm.c{color:var(--green);border-color:rgba(34,197,94,.22)}
+.pm.e{color:var(--teal);border-color:var(--bdr)}
+
+/* SEC */
+.sec{padding:78px 4%}
+.sec.alt{background:var(--navy2)}
+.sh{text-align:center;margin-bottom:46px}
+.stag{display:inline-block;font-family:'Syne',sans-serif;font-size:.67rem;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.sh h2{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;letter-spacing:-.02em}
+.sh p{color:var(--gray);margin-top:9px;font-size:.94rem}
+
+/* CANDLE SPOTLIGHT */
+.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.cs-visual{position:relative}
+.cs-main{background:linear-gradient(160deg,#1a0a00,#3d1500,#1a0800);
+  border-radius:24px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:9rem;position:relative;overflow:hidden;border:1px solid rgba(255,149,0,.2)}
+.cs-main::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 40%,rgba(255,200,50,.18) 0%,transparent 55%);
+  animation:flicker 2.5s ease-in-out infinite alternate}
+.cs-float{position:absolute;bottom:18px;left:16px;right:16px;
+  background:rgba(8,14,26,.9);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,149,0,.25);border-radius:14px;padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between}
+.cs-float h4{font-family:'Syne',sans-serif;font-size:.89rem;font-weight:700}
+.cs-float p{font-size:.7rem;color:var(--gray);margin-top:2px}
+.cs-float .cpr{color:var(--saffron);font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.cs-float .cpr::before{content:'₹';font-size:.82rem}
+.ci h2{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);
+  font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+.ci h2 .glow{color:var(--saffron)}
+.ci p{color:var(--gray);line-height:1.8;margin-bottom:22px;font-size:.97rem}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:24px}
+.cf{background:var(--card);border:1px solid var(--bdr);border-radius:12px;
+  padding:13px 15px;display:flex;align-items:center;gap:10px}
+.cf .ei{font-size:1.35rem}
+.cf strong{font-family:'Syne',sans-serif;font-size:.8rem;display:block}
+.cf p{font-size:.68rem;color:var(--gray)}
+.scents{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.sc-tag{background:var(--saffg);border:1px solid rgba(255,149,0,.25);
+  color:var(--saffron);font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
+  padding:5px 14px;border-radius:20px;letter-spacing:.04em}
+.cb-row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* COLLECTIONS */
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ct{border-radius:20px;overflow:hidden;position:relative;aspect-ratio:3/4;cursor:pointer;transition:transform .3s}
+.ct:hover{transform:translateY(-6px)}
+.ct:hover .ctcta{transform:translateY(0);opacity:1}
+.ct-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5.5rem;position:relative}
+.g1{background:linear-gradient(160deg,#050d20,#0e2a48,#050e18)}
+.g2{background:linear-gradient(160deg,#1a0800,#3d1500,#1a0500)}
+.g3{background:linear-gradient(160deg,#1a0d20,#35155c,#180a20)}
+.ct-info{position:absolute;bottom:0;left:0;right:0;padding:22px;
+  background:linear-gradient(to top,rgba(8,14,26,.97) 0%,transparent 100%)}
+.ct-t{font-family:'Syne',sans-serif;font-size:.63rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.ct-info h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800}
+.ct-info p{color:var(--gray);font-size:.76rem;margin-top:3px}
+.ctcta{display:inline-flex;align-items:center;gap:5px;margin-top:11px;
+  color:var(--teal);font-family:'Syne',sans-serif;font-size:.77rem;font-weight:700;
+  transform:translateY(8px);opacity:0;transition:all .3s}
+
+/* PRODUCTS */
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pc{background:var(--card);border:1px solid var(--bdr);
+  border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s;position:relative}
+.pc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.pc:hover .atc{opacity:1;transform:translateY(0)}
+.pi{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:3.8rem;position:relative;overflow:hidden}
+.p1{background:linear-gradient(135deg,#050d20,#112240)}
+.p2{background:linear-gradient(135deg,#1a0800,#3d1500)}
+.p3{background:linear-gradient(135deg,#0d1400,#1e2e00)}
+.p4{background:linear-gradient(135deg,#1a0d20,#35155c)}
+.p5{background:linear-gradient(135deg,#0a1520,#0f2840)}
+.p6{background:linear-gradient(135deg,#200800,#4a1500)}
+.pb{position:absolute;top:10px;left:10px;font-family:'Syne',sans-serif;
+  font-size:.6rem;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.06em}
+.pb.s{background:var(--red);color:#fff}
+.pb.n{background:var(--teal);color:var(--navy)}
+.pb.h{background:var(--saffron);color:#fff}
+.pb.cd{background:var(--green);color:var(--navy)}
+.pinfo{padding:14px}
+.pcat{font-size:.64rem;color:var(--teal);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.pname{font-family:'Syne',sans-serif;font-size:.87rem;font-weight:700;line-height:1.35;margin-bottom:7px}
+.ppr{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+.pnow{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--teal)}
+.pnow::before{content:'₹';font-size:.78rem}
+.pwas{font-size:.77rem;color:var(--gray);text-decoration:line-through}
+.pwas::before{content:'₹'}
+.psave{font-size:.67rem;color:var(--green);font-weight:700}
+.pst{color:#FFB800;font-size:.67rem;display:flex;align-items:center;gap:3px;margin-bottom:6px}
+.pst span{color:var(--gray);font-size:.64rem}
+.pcod{font-size:.65rem;color:var(--green);font-weight:600;margin-bottom:7px}
+.atc{width:100%;background:var(--teal);color:var(--navy);border:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.77rem;letter-spacing:.05em;
+  text-transform:uppercase;padding:10px;border-radius:8px;
+  opacity:0;transform:translateY(4px);transition:all .2s}
+.atc:hover{background:var(--teal2)}
+
+/* DEAL */
+.deal-wrap{display:flex;align-items:center;gap:44px}
+.dl{max-width:460px}
+.dl h2{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);
+  font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:13px}
+.dl h2 em{font-style:normal;color:var(--saffron)}
+.dl p{color:var(--gray);font-size:.94rem;line-height:1.75;margin-bottom:20px}
+.cd{display:flex;gap:12px;margin-bottom:26px}
+.cdi{background:var(--card);border:1px solid var(--bdr);border-radius:12px;
+  padding:13px 16px;text-align:center;min-width:68px}
+.cdn{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;
+  color:var(--saffron);line-height:1;display:block}
+.cdl{font-size:.6rem;color:var(--gray);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.dr{flex:0 0 325px;background:var(--card);border:1px solid var(--bdr);border-radius:22px;overflow:hidden}
+.dr-img{height:190px;display:flex;align-items:center;justify-content:center;font-size:6rem;
+  background:linear-gradient(135deg,#050d20,#112240);position:relative}
+.dr-tag{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;
+  font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;padding:5px 12px;border-radius:8px}
+.dr-info{padding:18px}
+.dr-info h3{font-family:'Syne',sans-serif;font-size:.97rem;font-weight:700;margin-bottom:7px}
+.drpr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.drnow{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--teal)}
+.drnow::before{content:'₹';font-size:1rem}
+.drwas{text-decoration:line-through;color:var(--gray);font-size:.88rem}
+.drwas::before{content:'₹'}
+.emi{font-size:.68rem;color:var(--saffron);background:var(--saffg);
+  border:1px solid rgba(255,149,0,.22);padding:3px 9px;border-radius:5px;font-weight:700}
+.pbar{background:var(--navy);border-radius:4px;height:6px;overflow:hidden;margin-bottom:6px}
+.pfill{height:100%;background:linear-gradient(90deg,var(--teal),var(--saffron));
+  border-radius:4px;width:73%;animation:pfA 2s ease both}
+@keyframes pfA{from{width:0}to{width:73%}}
+.ptxt{font-size:.67rem;color:var(--gray)}
+.ptxt strong{color:var(--white)}
+
+/* SOCIAL */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.scard{background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow:hidden}
+.sm{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
+.sm1{background:linear-gradient(135deg,#2a0d38,#4a1860)}
+.sm2{background:linear-gradient(135deg,#050d20,#112240)}
+.sm3{background:linear-gradient(135deg,#1a0800,#3d1500)}
+.sm4{background:linear-gradient(135deg,#181800,#2a2a00)}
+.so{position:absolute;inset:0;display:flex;align-items:flex-end;padding:10px}
+.sotag{background:rgba(8,14,26,.85);border:1px solid var(--bdr);
+  border-radius:20px;padding:3px 9px;font-size:.63rem;font-family:'Syne',sans-serif;font-weight:700;color:var(--teal)}
+.sbot{padding:12px}
+.su{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.ava{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:.63rem;font-weight:800;color:var(--navy);flex-shrink:0}
+.un{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700}
+.uh{font-size:.62rem;color:var(--gray)}
+.stxt{font-size:.74rem;color:var(--gray);line-height:1.5}
+.slike{font-size:.67rem;color:var(--teal);margin-top:5px;font-weight:700}
+
+/* REVIEWS */
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.rc{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:22px}
+.rcst{color:#FFB800;font-size:.88rem;margin-bottom:10px}
+.rctxt{font-size:.85rem;color:var(--gray);line-height:1.75;margin-bottom:14px;font-style:italic}
+.rctxt strong{color:var(--white);font-style:normal}
+.rcu{display:flex;align-items:center;gap:10px}
+.rcav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-weight:800;color:var(--navy);font-size:.85rem}
+.rcn{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700}
+.rcl{font-size:.66rem;color:var(--gray)}
+.rcv{font-size:.66rem;color:var(--teal)}
+
+/* WHY */
+.wg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.wc{background:var(--card);border:1px solid var(--bdr);border-radius:16px;
+  padding:24px 18px;text-align:center;transition:border-color .3s,transform .3s}
+.wc:hover{border-color:var(--teal);transform:translateY(-4px)}
+.wi{font-size:2.4rem;display:block;margin-bottom:12px}
+.wc h3{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;margin-bottom:7px}
+.wc p{font-size:.77rem;color:var(--gray);line-height:1.6}
+
+/* FOOTER */
+footer{background:#050B16;border-top:1px solid var(--bdr);padding:54px 4% 24px}
+.fg{display:grid;grid-template-columns:2.2fr 1fr 1fr 1.2fr;gap:34px;margin-bottom:34px}
+.fb p{color:var(--gray);font-size:.82rem;line-height:1.8;margin:14px 0 16px}
+.fsoc{display:flex;gap:8px}
+.fsb{width:34px;height:34px;border-radius:8px;background:var(--card);border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;transition:all .2s}
+.fsb:hover{border-color:var(--teal);transform:translateY(-2px)}
+.fc h4{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+.fc a{display:block;color:var(--gray);font-size:.81rem;margin-bottom:9px;transition:color .2s}
+.fc a:hover{color:var(--teal)}
+.cti{display:flex;align-items:flex-start;gap:7px;color:var(--gray);font-size:.81rem;margin-bottom:9px}
+.gst{font-size:.68rem;color:var(--gray);background:var(--card);
+  border:1px solid var(--bdr);border-radius:6px;padding:6px 10px;margin-top:10px;line-height:1.5}
+.fbot{border-top:1px solid var(--bdr);padding-top:20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.fbot p{color:var(--gray);font-size:.72rem}
+.pbadges{display:flex;gap:7px;flex-wrap:wrap}
+.pbg{background:var(--card);border:1px solid var(--bdr);border-radius:6px;
+  padding:4px 10px;font-size:.67rem;font-family:'Syne',sans-serif;font-weight:700;color:var(--gray)}
+
+/* STICKY */
+.satc{position:fixed;bottom:0;left:0;right:0;z-index:980;
+  background:rgba(8,14,26,.98);border-top:1px solid var(--bdr);
+  backdrop-filter:blur(22px);padding:11px 4%;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  transform:translateY(100%);transition:transform .3s}
+.satc.vis{transform:translateY(0)}
+.satc-p{display:flex;align-items:center;gap:12px}
+.satc-th{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#1a0800,#3d1500);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.satc-n{font-family:'Syne',sans-serif;font-weight:700;font-size:.87rem}
+.satc-pr{color:var(--teal);font-size:.8rem}
+
+/* CART DRAWER */
+.cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:990;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-ov.open{opacity:1;pointer-events:all}
+.cart-dr{position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100vh;
+  background:var(--navy2);border-left:1px solid var(--bdr);z-index:991;
+  transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-dr.open{right:0}
+.cdh{padding:20px 24px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between}
+.cdh h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+.cdcl{background:var(--card);border:1px solid var(--bdr);border-radius:8px;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cditems{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:13px}
+.cdi-item{display:flex;align-items:center;gap:11px;background:var(--card);
+  border:1px solid var(--bdr);border-radius:12px;padding:11px}
+.cdi-th{width:48px;height:48px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-size:1.7rem;flex-shrink:0;background:var(--navy)}
+.cdi-n{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;flex:1}
+.cdi-pr{font-family:'Syne',sans-serif;font-weight:800;color:var(--teal);font-size:.88rem}
+.cdi-pr::before{content:'₹'}
+.qty-c{display:flex;align-items:center;gap:7px}
+.qb{background:var(--navy);border:1px solid var(--bdr);border-radius:6px;
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;transition:border-color .2s}
+.qb:hover{border-color:var(--teal)}
+.qv{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;min-width:18px;text-align:center}
+.cdf{padding:18px 22px;border-top:1px solid var(--bdr)}
+.cdt{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.cdt span{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;color:var(--gray)}
+.cdt strong{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--teal)}
+.cdt strong::before{content:'₹'}
+.cdbtn{width:100%;background:var(--teal);color:var(--navy);border:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;letter-spacing:.04em;
+  padding:14px;border-radius:12px;margin-bottom:9px;transition:background .2s}
+.cdbtn:hover{background:var(--teal2)}
+.cd-note{text-align:center;font-size:.71rem;color:var(--gray)}
+.cd-empty{text-align:center;padding:44px 22px;color:var(--gray)}
+.cd-empty .ei{font-size:3rem;margin-bottom:12px}
+
+/* TOAST */
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(30px);
+  background:var(--card);border:1px solid var(--teal);border-radius:12px;
+  padding:11px 20px;font-family:'Syne',sans-serif;font-size:.81rem;font-weight:700;
+  color:var(--teal);z-index:1100;opacity:0;transition:all .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:900px){
+  .hero-vis,.srch,nav{display:none}
+  .cg,.pg{grid-template-columns:repeat(2,1fr)}
+  .fg{grid-template-columns:1fr 1fr}
+  .wg{grid-template-columns:1fr 1fr}
+  .rg,.sg{grid-template-columns:1fr 1fr}
+  .deal-wrap{flex-direction:column}
+  .dr{width:100%;flex:none}
+  .cs-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="ann">
+  🇮🇳 <strong>FREE Delivery</strong> above ₹499 &nbsp;·&nbsp;
+  🕯️ Handcrafted Candles — Limited Stock! &nbsp;·&nbsp;
+  💥 First Order? Code <strong>PAANI10</strong> = 10% OFF &nbsp;·&nbsp;
+  📦 COD Available Pan-India &nbsp;·&nbsp;
+  🔄 <strong>15-Day Easy Returns</strong>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">Paani<span class="t">trendzz</span><span class="flag"> 🇮🇳</span></a>
+  <nav>
+    <a href="#" class="nav-fire">🔥 Trending</a>
+    <a href="#candles">🕯️ Candles</a>
+    <a href="#gadgets">📱 Gadgets</a>
+    <a href="#collections">All Categories</a>
+  </nav>
+  <div class="srch">
+    <span style="color:var(--gray)">🔍</span>
+    <input type="text" placeholder="Search products…"/>
+  </div>
+  <div class="hdr-r">
+    <div class="cart-btn" onclick="toggleCart()">🛒<span class="cc" id="cartCount">0</span></div>
+    <div id="hdrUserChip" style="display:none;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--bdr);border-radius:22px;padding:5px 13px 5px 7px;cursor:pointer" onclick="window.location.href='account.html'">
+      <div id="hdrAva" style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal2));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--navy);font-family:'Syne',sans-serif">?</div>
+      <span id="hdrUname" style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--white)">My Account</span>
+    </div>
+    <a href="login.html" id="hdrLoginBtn" class="admin-lnk">👤 Login</a>
+    <a href="admin.html" class="admin-lnk" target="_blank">⚙️ Admin</a>
+    <button class="btn-teal" onclick="document.getElementById('gadgets').scrollIntoView()">Shop Now</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-c">
+    <div class="hero-badge"><div class="pdot"></div>New drops live — India's favourite store 🇮🇳</div>
+    <h1>The Pulse of<br/><span class="tc">Every Trend.</span><br/><span class="ts">India's Own.</span></h1>
+    <div class="hero-hin">Desh ka sabse trendy store — aapka apna! 🇮🇳</div>
+    <p>Handcrafted soy candles, viral gadgets & must-have home essentials — all at Indian prices. COD everywhere. 15-day returns. Delivered across India.</p>
+    <div class="hero-btns">
+      <button class="btn-saff" onclick="document.getElementById('candles').scrollIntoView()">🕯️ Shop Candles</button>
+      <button class="btn-outline" onclick="document.getElementById('gadgets').scrollIntoView()">📱 Trending Gadgets</button>
+    </div>
+  </div>
+  <div class="hero-vis">
+    <div class="hmc">
+      <div class="hmc-img">🕯️<div class="ftag">BESTSELLER 🔥</div></div>
+      <div class="hmc-info">
+        <div><h3>Rose & Oud Soy Candle</h3><div style="font-size:.68rem;color:var(--gray);margin-top:2px">⭐⭐⭐⭐⭐ (1,842 reviews)</div></div>
+        <div class="pr">699</div>
+      </div>
+    </div>
+    <div class="mini-cards">
+      <div class="mc"><div class="em">📱</div><div><strong>Smart Gadgets</strong><p>From ₹299</p></div></div>
+      <div class="mc"><div class="em">🏠</div><div><strong>Home Essentials</strong><p>From ₹199</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="ti">🔒 Secure Checkout</div>
+  <div class="ti">🚚 Free Delivery ₹499+</div>
+  <div class="ti">🔄 15-Day Easy Returns</div>
+  <div class="ti">💵 Cash on Delivery</div>
+  <div class="ti">🇮🇳 Made & Shipped in India</div>
+  <div class="ti">⭐ 50,000+ Happy Customers</div>
+</div>
+
+<!-- PAYMENT STRIP -->
+<div class="paystrip">
+  <span class="psl">We Accept:</span>
+  <div class="pm u">📲 UPI (GPay / PhonePe / Paytm)</div>
+  <div class="pm c">💵 Cash on Delivery</div>
+  <div class="pm e">💳 EMI via Razorpay</div>
+  <div class="pm">🏦 Net Banking</div>
+  <div class="pm">💳 All Cards</div>
+</div>
+
+<!-- CANDLE SPOTLIGHT -->
+<section class="sec" id="candles">
+  <div class="sh reveal">
+    <div class="stag">🕯️ Our Signature Collection</div>
+    <h2>Handcrafted Luxury Candles</h2>
+    <p>Pure soy wax · Premium fragrance oils · Made with love in India · Perfect for gifting</p>
+  </div>
+  <div class="cs-grid reveal">
+    <div class="cs-visual">
+      <div class="cs-main">🕯️</div>
+      <div class="cs-float">
+        <div><h4>Rose & Oud Luxury Candle</h4><p>100% Soy Wax · 40hr burn · Gift-ready box</p></div>
+        <div class="cpr">699</div>
+      </div>
+    </div>
+    <div class="ci">
+      <h2>Light Up Your <span class="glow">Mood ✨</span></h2>
+      <p>Our handcrafted candles are made from 100% natural soy wax infused with premium Indian fragrance oils. Zero paraffin, zero toxins — just pure, long-lasting luxury. Perfect for Diwali gifting, home décor, or your daily self-care ritual.</p>
+      <div class="cf-grid">
+        <div class="cf"><div class="ei">🌿</div><div><strong>100% Soy Wax</strong><p>Natural, clean burn</p></div></div>
+        <div class="cf"><div class="ei">⏱️</div><div><strong>40+ Hour Burn</strong><p>Long lasting fragrance</p></div></div>
+        <div class="cf"><div class="ei">🎁</div><div><strong>Gift-Ready Box</strong><p>Premium packaging</p></div></div>
+        <div class="cf"><div class="ei">🇮🇳</div><div><strong>Made in India</strong><p>Handcrafted with love</p></div></div>
+      </div>
+      <div class="scents">
+        <span class="sc-tag">🌹 Rose & Oud</span>
+        <span class="sc-tag">🌸 Jasmine</span>
+        <span class="sc-tag">🪵 Sandalwood</span>
+        <span class="sc-tag">🍋 Lemongrass</span>
+        <span class="sc-tag">🌙 Lavender</span>
+        <span class="sc-tag">☕ Vanilla Bean</span>
+        <span class="sc-tag">🪷 Mogra</span>
+      </div>
+      <div class="cb-row">
+        <button class="btn-saff" onclick="addToCart('Rose & Oud Soy Candle','699','🕯️')">Add to Cart — ₹699</button>
+        <button class="btn-outline" onclick="addToCart('Candle Gift Set (3pcs)','1499','🎁')">🎁 Gift Bundle ₹1499</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="sec alt" id="collections">
+  <div class="sh reveal">
+    <div class="stag">✦ Shop by Category</div>
+    <h2>Find Your Trend</h2>
+    <p>Candles, gadgets, home — India's one-stop trending store.</p>
+  </div>
+  <div class="cg reveal">
+    <div class="ct"><div class="ct-bg g1">📱</div>
+      <div class="ct-info"><div class="ct-t">✦ Tech & Gadgets</div><h3>Trending Gadgets</h3><p>Viral on Instagram & YouTube India</p><div class="ctcta">Shop Gadgets →</div></div>
+    </div>
+    <div class="ct"><div class="ct-bg g2">🕯️</div>
+      <div class="ct-info"><div class="ct-t">✦ Handcrafted</div><h3>Luxury Candles</h3><p>Soy wax · Premium fragrances · Gift sets</p><div class="ctcta">Shop Candles →</div></div>
+    </div>
+    <div class="ct"><div class="ct-bg g3">🏠</div>
+      <div class="ct-info"><div class="ct-t">✦ Home & Lifestyle</div><h3>Home Essentials</h3><p>Modern living at Indian prices</p><div class="ctcta">Shop Home →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="sec" id="gadgets">
+  <div class="sh reveal">
+    <div class="stag">🔥 Bestsellers This Week</div>
+    <h2>Trending Right Now 🇮🇳</h2>
+    <p>Viral products · Indian prices · COD available · Grab before they sell out!</p>
+  </div>
+  <div class="pg reveal">
+    <div class="pc"><div class="pi p2">🕯️<div class="pb h">BESTSELLER 🔥</div></div>
+      <div class="pinfo"><div class="pcat">Candles</div><div class="pname">Rose & Oud Luxury Soy Candle</div>
+        <div class="pst">★★★★★ <span>(1,842)</span></div>
+        <div class="ppr"><span class="pnow">699</span><span class="pwas">1200</span><span class="psave">Save ₹501</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Rose & Oud Candle','699','🕯️')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p1">🎧<div class="pb s">-45%</div></div>
+      <div class="pinfo"><div class="pcat">Gadgets</div><div class="pname">Pro Wireless Earbuds – 40hr Battery</div>
+        <div class="pst">★★★★★ <span>(3,241)</span></div>
+        <div class="ppr"><span class="pnow">1299</span><span class="pwas">2399</span><span class="psave">Save ₹1100</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Pro Wireless Earbuds','1299','🎧')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p6">🕯️<div class="pb n">NEW</div></div>
+      <div class="pinfo"><div class="pcat">Candles</div><div class="pname">Jasmine & Sandalwood Gift Set (3pcs)</div>
+        <div class="pst">★★★★★ <span>(687)</span></div>
+        <div class="ppr"><span class="pnow">1499</span><span class="pwas">2499</span><span class="psave">Save ₹1000</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Jasmine Gift Set','1499','🎁')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p3">💡<div class="pb s">-38%</div></div>
+      <div class="pinfo"><div class="pcat">Home</div><div class="pname">RGB Smart LED Desk Lamp</div>
+        <div class="pst">★★★★☆ <span>(1,103)</span></div>
+        <div class="ppr"><span class="pnow">899</span><span class="pwas">1450</span><span class="psave">Save ₹551</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('RGB Desk Lamp','899','💡')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p4">⌚<div class="pb h">HOT 🔥</div></div>
+      <div class="pinfo"><div class="pcat">Gadgets</div><div class="pname">Smart Fitness Band – AMOLED Display</div>
+        <div class="pst">★★★★★ <span>(4,512)</span></div>
+        <div class="ppr"><span class="pnow">2499</span><span class="pwas">4999</span><span class="psave">Save ₹2500</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Smart Fitness Band','2499','⌚')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p2">🕯️<div class="pb cd">LIMITED</div></div>
+      <div class="pinfo"><div class="pcat">Candles</div><div class="pname">Lavender Calm Soy Candle – 200g</div>
+        <div class="pst">★★★★★ <span>(923)</span></div>
+        <div class="ppr"><span class="pnow">549</span><span class="pwas">899</span><span class="psave">Save ₹350</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Lavender Calm Candle','549','🕯️')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p1">🔌<div class="pb s">-55%</div></div>
+      <div class="pinfo"><div class="pcat">Gadgets</div><div class="pname">3-in-1 MagSafe Wireless Charger</div>
+        <div class="pst">★★★★★ <span>(2,876)</span></div>
+        <div class="ppr"><span class="pnow">1899</span><span class="pwas">4199</span><span class="psave">Save ₹2300</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('MagSafe Charger','1899','🔌')">Add to Cart</button></div>
+    </div>
+    <div class="pc"><div class="pi p3">🏠<div class="pb n">COMBO</div></div>
+      <div class="pinfo"><div class="pcat">Home</div><div class="pname">Aroma Diffuser + Candle Combo Pack</div>
+        <div class="pst">★★★★★ <span>(1,567)</span></div>
+        <div class="ppr"><span class="pnow">1299</span><span class="pwas">2199</span><span class="psave">Save ₹900</span></div>
+        <div class="pcod">✅ COD Available</div>
+        <button class="atc" onclick="addToCart('Aroma Diffuser Combo','1299','🏠')">Add to Cart</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEAL OF THE DAY -->
+<section class="sec alt">
+  <div class="sh reveal"><div class="stag">⚡ Deal of the Day</div><h2>Flash Sale – Aaj Ka Deal! 🔥</h2></div>
+  <div class="deal-wrap reveal">
+    <div class="dl">
+      <h2>Sirf Aaj! <em>Mega Discount</em> ⚡</h2>
+      <p>Hamaara sabse viral 3-in-1 charger ab tak ke sabse kam daam mein! Works with iPhone, Android & earbuds. Offer midnight pe khatam!</p>
+      <div class="cd">
+        <div class="cdi"><span class="cdn" id="dh">08</span><div class="cdl">Hours</div></div>
+        <div class="cdi"><span class="cdn" id="dm">43</span><div class="cdl">Mins</div></div>
+        <div class="cdi"><span class="cdn" id="ds">21</span><div class="cdl">Secs</div></div>
+      </div>
+      <button class="btn-saff" onclick="addToCart('MagSafe Charger Flash Deal','1899','🔌')">⚡ Grab Deal – ₹1,899</button>
+    </div>
+    <div class="dr">
+      <div class="dr-img">🔌<div class="dr-tag">-55%</div></div>
+      <div class="dr-info">
+        <h3>3-in-1 MagSafe Wireless Charging Station</h3>
+        <p style="font-size:.77rem;color:var(--gray);margin-bottom:10px">Charges phone + watch + earbuds simultaneously. Declutter your nightstand!</p>
+        <div class="drpr">
+          <span class="drnow">1,899</span><span class="drwas">4,199</span>
+          <span class="emi">EMI from ₹159/mo</span>
+        </div>
+        <div class="pbar"><div class="pfill"></div></div>
+        <div class="ptxt"><strong>73% sold</strong> — only 27 units left!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="sec">
+  <div class="sh reveal">
+    <div class="stag">📲 As Seen on Social Media</div>
+    <h2>India Is Loving It! 🇮🇳</h2>
+    <p>Real customers · Viral across Instagram, YouTube & TikTok India</p>
+  </div>
+  <div class="sg reveal">
+    <div class="scard">
+      <div class="sm sm1">🕯️<div class="so"><span class="sotag">#PaaniCandles</span></div></div>
+      <div class="sbot"><div class="su"><div class="ava" style="background:linear-gradient(135deg,var(--teal),#0070ff)">P</div>
+        <div><div class="un">priya.vibes</div><div class="uh">@priyavibes · Instagram · Mumbai</div></div></div>
+        <div class="stxt">"Yeh candles are GORGEOUS omg 😍 rose oud wali liya aur room 5-star hotel jaisa smell karne laga!!"</div>
+        <div class="slike">❤️ 18.4K likes 🇮🇳</div></div>
+    </div>
+    <div class="scard">
+      <div class="sm sm2">🎧<div class="so"><span class="sotag">#PaaniGadgets</span></div></div>
+      <div class="sbot"><div class="su"><div class="ava" style="background:linear-gradient(135deg,#ff6b6b,#ff3b5c)">R</div>
+        <div><div class="un">rahul_techie</div><div class="uh">@rahultechie · YouTube · Hyderabad</div></div></div>
+        <div class="stxt">"Inke earbuds ₹1299 mein?? Bhai seriously 🤯 sound quality is insane. Best budget earbuds India 2026!"</div>
+        <div class="slike">❤️ 32.1K likes 🇮🇳</div></div>
+    </div>
+    <div class="scard">
+      <div class="sm sm3">🕯️<div class="so"><span class="sotag">#GiftIdeasIndia</span></div></div>
+      <div class="sbot"><div class="su"><div class="ava" style="background:linear-gradient(135deg,var(--saffron),#ff6b00)">A</div>
+        <div><div class="un">anjali.creates</div><div class="uh">@anjali · Reels · Delhi</div></div></div>
+        <div class="stxt">"Mom ko birthday pe candle gift set diya aur unke aankhon mein aansu aa gaye 😭🕯️ packaging so premium!!"</div>
+        <div class="slike">❤️ 24.7K likes 🇮🇳</div></div>
+    </div>
+    <div class="scard">
+      <div class="sm sm4">⌚<div class="so"><span class="sotag">#PaaniTrendzz</span></div></div>
+      <div class="sbot"><div class="su"><div class="ava" style="background:linear-gradient(135deg,var(--gold),var(--saffron))">V</div>
+        <div><div class="un">vikas.fit</div><div class="uh">@vikasfit · Instagram · Bangalore</div></div></div>
+        <div class="stxt">"Smart band ₹2499 mein? Bhai Fitbit bhool jao 😂 tracking accurate aur battery 10 din chalti hai easily!"</div>
+        <div class="slike">❤️ 41.2K likes 🇮🇳</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec alt">
+  <div class="sh reveal">
+    <div class="stag">⭐ Verified Reviews</div>
+    <h2>50,000+ Happy Indians 🇮🇳</h2>
+    <p>Har ek review sach — verified buyers from across India</p>
+  </div>
+  <div class="rg reveal">
+    <div class="rc"><div class="rcst">★★★★★</div>
+      <div class="rctxt">"Candle ki quality dekh ke dil khush ho gaya! <strong>Pure soy wax, fragrance 2 din tak rehti hai.</strong> Packaging bhi bilkul premium. Already 3rd order kar diya! 🕯️"</div>
+      <div class="rcu"><div class="rcav" style="background:linear-gradient(135deg,var(--teal),#0070ff)">S</div>
+        <div><div class="rcn">Sneha Kapoor</div><div class="rcl">📍 Mumbai, Maharashtra</div><div class="rcv">✓ Verified Buyer</div></div></div>
+    </div>
+    <div class="rc"><div class="rcst">★★★★★</div>
+      <div class="rctxt">"Earbuds order kiye, <strong>next day delivery Hyderabad mein!</strong> Sound quality toh kya bolu, ₹5000 wale se compare kar sakte ho. COD bhi mila. 💯"</div>
+      <div class="rcu"><div class="rcav" style="background:linear-gradient(135deg,var(--saffron),#ff6b00)">R</div>
+        <div><div class="rcn">Rahul Mehta</div><div class="rcl">📍 Hyderabad, Telangana</div><div class="rcv">✓ Verified Buyer</div></div></div>
+    </div>
+    <div class="rc"><div class="rcst">★★★★★</div>
+      <div class="rctxt">"Ek product size issue tha, return policy bahut easy thi. <strong>15 din mein full refund — no questions asked.</strong> Isse better customer service kahan milegi! 🙏"</div>
+      <div class="rcu"><div class="rcav" style="background:linear-gradient(135deg,var(--green),#00aa44)">P</div>
+        <div><div class="rcn">Priya Sharma</div><div class="rcl">📍 Jaipur, Rajasthan</div><div class="rcv">✓ Verified Buyer</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="sec">
+  <div class="sh reveal"><div class="stag">💎 Why Choose Us</div><h2>Kyon Paanitrendzz? 🇮🇳</h2></div>
+  <div class="wg reveal">
+    <div class="wc"><span class="wi">🕯️</span><h3>Handcrafted Candles</h3><p>100% soy wax, made in India. Premium fragrance, zero chemicals.</p></div>
+    <div class="wc"><span class="wi">💰</span><h3>Indian Prices</h3><p>International quality, desi prices. No hidden charges. COD available.</p></div>
+    <div class="wc"><span class="wi">🚚</span><h3>Pan-India Delivery</h3><p>27,000+ pincodes. Express delivery in all metro cities.</p></div>
+    <div class="wc"><span class="wi">🔄</span><h3>15-Day Returns</h3><p>Not happy? Return within 15 days. Full refund — no questions asked.</p></div>
+    <div class="wc"><span class="wi">🎁</span><h3>Gift Packaging</h3><p>Beautiful gift-ready boxes. Perfect for Diwali, birthdays & anniversaries.</p></div>
+    <div class="wc"><span class="wi">📲</span><h3>UPI / COD / EMI</h3><p>GPay, PhonePe, Paytm, Cards, Net Banking or Cash on Delivery.</p></div>
+    <div class="wc"><span class="wi">🌿</span><h3>Eco-Friendly</h3><p>Sustainable packaging, natural ingredients. Caring for India's environment.</p></div>
+    <div class="wc"><span class="wi">🛡️</span><h3>100% Genuine</h3><p>All products quality-checked before dispatch. McAfee Secured checkout.</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fg">
+    <div class="fb">
+      <div class="logo">Paani<span class="t">trendzz</span><span class="flag"> 🇮🇳</span></div>
+      <p>India's trending store for handcrafted candles, viral gadgets & home essentials. Made in India, delivered across India. COD available everywhere.</p>
+      <div class="fsoc">
+        <a class="fsb" href="#">📸</a><a class="fsb" href="#">🎵</a>
+        <a class="fsb" href="#">▶️</a><a class="fsb" href="#">💬</a>
+      </div>
+      <div class="gst">🏢 GSTIN: 36XXXXXXXXXXXXX · Registered in Telangana, India</div>
+    </div>
+    <div class="fc">
+      <h4>Shop</h4>
+      <a href="#">🕯️ Luxury Candles</a><a href="#">📱 Trending Gadgets</a>
+      <a href="#">🏠 Home Essentials</a><a href="#">🎁 Gift Sets</a>
+      <a href="#">🔥 Flash Deals</a><a href="#">🆕 New Arrivals</a>
+    </div>
+    <div class="fc">
+      <h4>Customer Care</h4>
+      <a href="#">📦 Track Your Order</a><a href="#">🚚 Shipping Policy</a>
+      <a href="#">🔄 15-Day Returns</a><a href="#">❓ FAQ</a>
+      <a href="#">💬 WhatsApp Support</a><a href="#">📞 Call Us</a>
+    </div>
+    <div class="fc">
+      <h4>Contact Us</h4>
+      <div class="cti">📞 <span>8297744626</span></div>
+      <div class="cti">✉️ <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f1e1b1216113f0f1e1e11160b0d1a111b0505511c1012">[email&#160;protected]</a></span></div>
+      <div class="cti">💬 <span>WhatsApp: 8297744626</span></div>
+      <div class="cti">🕐 <span>Mon–Sat: 9am–7pm IST</span></div>
+      <div class="cti">📍 <span>Hyderabad, Telangana</span></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2026 Paanitrendzz. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+    <div class="pbadges">
+      <span class="pbg">📲 UPI</span><span class="pbg">💵 COD</span>
+      <span class="pbg">VISA</span><span class="pbg">Mastercard</span>
+      <span class="pbg">Razorpay</span><span class="pbg">🔒 SSL Secured</span>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY ATC -->
+<div class="satc" id="satc">
+  <div class="satc-p">
+    <div class="satc-th">🕯️</div>
+    <div><div class="satc-n">Rose & Oud Luxury Candle</div>
+      <div class="satc-pr">₹699 <s style="color:var(--gray);font-size:.75rem">₹1200</s> — Only 15 left! ✅ COD</div></div>
+  </div>
+  <button class="btn-saff" onclick="addToCart('Rose & Oud Candle','699','🕯️')">🛒 Add to Cart — Save ₹501</button>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-ov" id="cartOv" onclick="toggleCart()"></div>
+<div class="cart-dr" id="cartDr">
+  <div class="cdh"><h3>🛒 Your Cart</h3><div class="cdcl" onclick="toggleCart()">✕</div></div>
+  <div class="cditems" id="cartItems"><div class="cd-empty"><div class="ei">🛒</div><span>Cart is empty!<br/>Add some trending products 🔥</span></div></div>
+  <div class="cdf">
+    <div class="cdt"><span>Total (incl. GST)</span><strong id="cartTotal">0</strong></div>
+    <button class="cdbtn">🔒 Proceed to Checkout</button>
+    <div class="cd-note">📲 UPI · 💵 COD · 💳 EMI · 🔄 15-Day Returns</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Added to cart!</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── SESSION CHECK ──
+(function(){
+  const sess=localStorage.getItem('pt_session');
+  const chip=document.getElementById('hdrUserChip');
+  const loginBtn=document.getElementById('hdrLoginBtn');
+  if(sess){
+    const s=JSON.parse(sess);
+    const initials=(s.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    document.getElementById('hdrAva').textContent=initials;
+    document.getElementById('hdrUname').textContent=s.name.split(' ')[0];
+    chip.style.display='flex';
+    loginBtn.style.display='none';
+  }
+})();
+
+// COUNTDOWN
+function tick(){
+  const now=new Date(),end=new Date(now);end.setHours(23,59,59,999);
+  const d=end-now,h=Math.floor(d/3600000),m=Math.floor((d%3600000)/60000),s=Math.floor((d%60000)/1000);
+  document.getElementById('dh').textContent=String(h).padStart(2,'0');
+  document.getElementById('dm').textContent=String(m).padStart(2,'0');
+  document.getElementById('ds').textContent=String(s).padStart(2,'0');
+}
+setInterval(tick,1000);tick();
+
+// CART
+let cart=[];
+function addToCart(name,price,emoji){
+  const ex=cart.find(i=>i.name===name);
+  if(ex)ex.qty++;else cart.push({name,price:parseInt(price),emoji,qty:1});
+  renderCart();showToast('✅ '+name+' added to cart!');
+}
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartTotal').textContent=total.toLocaleString('en-IN');
+  document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);
+  if(!cart.length){el.innerHTML='<div class="cd-empty"><div class="ei">🛒</div><span>Cart is empty!<br/>Add some trending products 🔥</span></div>';return;}
+  el.innerHTML=cart.map((item,i)=>`
+    <div class="cdi-item">
+      <div class="cdi-th">${item.emoji}</div>
+      <div style="flex:1"><div class="cdi-n">${item.name}</div><div class="cdi-pr">${(item.price*item.qty).toLocaleString('en-IN')}</div></div>
+      <div class="qty-c">
+        <div class="qb" onclick="chgQty(${i},-1)">−</div>
+        <div class="qv">${item.qty}</div>
+        <div class="qb" onclick="chgQty(${i},1)">+</div>
+      </div>
+    </div>`).join('');
+}
+function chgQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);renderCart();}
+function toggleCart(){
+  document.getElementById('cartDr').classList.toggle('open');
+  document.getElementById('cartOv').classList.toggle('open');
+}
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+window.addEventListener('scroll',()=>document.getElementById('satc').classList.toggle('vi

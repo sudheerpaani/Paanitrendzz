@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paanitrendzz – Login / Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#080E1A;--navy2:#0D1B30;--navy3:#112240;
+  --teal:#00E5C8;--teal2:#00b8a0;--tealg:rgba(0,229,200,.13);
+  --saff:#FF9500;--saff2:#e07800;--saffg:rgba(255,149,0,.11);
+  --white:#F0F8FF;--gray:#7A8599;--card:#0F1E35;--card2:#162540;
+  --bdr:rgba(0,229,200,.13);--green:#22C55E;--red:#EF4444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif}
+
+/* BG */
+.bg{position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 50%,rgba(0,229,200,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 10% 80%,rgba(255,149,0,.06) 0%,transparent 55%),
+    radial-gradient(ellipse 30% 30% at 50% 10%,rgba(255,215,0,.04) 0%,transparent 50%),
+    var(--navy)}
+.bg-grid{position:fixed;inset:0;z-index:0;opacity:.022;
+  background-image:linear-gradient(var(--teal) 1px,transparent 1px),
+    linear-gradient(90deg,var(--teal) 1px,transparent 1px);
+  background-size:46px 46px}
+.bg-particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+.particle{position:absolute;border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:.4}
+  90%{opacity:.2}
+  100%{transform:translateY(-100px) scale(1.2);opacity:0}
+}
+
+/* SPLIT LAYOUT */
+.split{position:relative;z-index:10;display:flex;min-height:100vh}
+
+/* LEFT BRAND PANEL */
+.brand-panel{flex:0 0 45%;background:linear-gradient(160deg,rgba(0,229,200,.06) 0%,transparent 60%);
+  border-right:1px solid var(--bdr);padding:48px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden}
+.brand-panel::before{content:'';position:absolute;bottom:-100px;left:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,149,0,.06) 0%,transparent 70%)}
+.brand-top .logo{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  letter-spacing:-.03em;margin-bottom:8px}
+.brand-top .logo span{color:var(--teal)}
+.brand-top .flag{font-size:.9rem;color:var(--saff);font-family:'Syne',sans-serif;
+  font-weight:700;letter-spacing:.06em}
+.brand-mid{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+.brand-mid h2{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;
+  line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.brand-mid h2 .tc{color:var(--teal)}.brand-mid h2 .ts{color:var(--saff)}
+.brand-mid .hin{color:rgba(255,149,0,.75);font-style:italic;font-size:.95rem;margin-bottom:24px}
+.perks{display:flex;flex-direction:column;gap:13px}
+.perk{display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--bdr);
+  border-radius:12px;padding:12px 15px}
+.perk-icon{font-size:1.3rem;flex-shrink:0}
+.perk-text strong{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;display:block}
+.perk-text span{font-size:.74rem;color:var(--gray)}
+.brand-bot{font-size:.74rem;color:var(--gray);line-height:1.6}
+.brand-bot a{color:var(--teal)}
+
+/* RIGHT AUTH PANEL */
+.auth-panel{flex:1;display:flex;align-items:center;justify-content:center;
+  padding:32px;overflow-y:auto}
+.auth-box{width:100%;max-width:420px}
+
+/* TABS */
+.tabs{display:flex;background:var(--card);border:1px solid var(--bdr);
+  border-radius:14px;padding:4px;margin-bottom:28px;gap:4px}
+.tab{flex:1;padding:10px;text-align:center;border-radius:10px;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--gray);transition:all .2s;letter-spacing:.03em}
+.tab.active{background:var(--teal);color:var(--navy)}
+
+/* SCREENS */
+.screen{display:none}.screen.active{display:block}
+.screen-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  letter-spacing:-.02em;margin-bottom:6px}
+.screen-sub{font-size:.85rem;color:var(--gray);margin-bottom:24px;line-height:1.6}
+.screen-sub strong{color:var(--saff)}
+
+/* FORM */
+.form-row{margin-bottom:16px}
+.form-row label{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--gray);
+  display:block;margin-bottom:7px}
+.input-wrap{position:relative;display:flex;align-items:center}
+.input-wrap .icon{position:absolute;left:14px;font-size:1rem;pointer-events:none}
+.input-wrap input{width:100%;background:var(--card);border:1px solid var(--bdr);
+  border-radius:12px;padding:13px 14px 13px 42px;color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;
+  transition:border-color .2s,box-shadow .2s}
+.input-wrap input:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--tealg)}
+.input-wrap input.error{border-color:var(--red)}
+.input-wrap input.success{border-color:var(--green)}
+.input-wrap input::placeholder{color:var(--gray)}
+.input-wrap .eye{position:absolute;right:14px;cursor:pointer;color:var(--gray);font-size:.9rem}
+.input-hint{font-size:.72rem;color:var(--gray);margin-top:5px}
+.input-hint.err{color:var(--red)}.input-hint.ok{color:var(--green)}
+
+/* OTP BOX */
+.otp-wrap{display:flex;gap:10px;justify-content:center;margin:8px 0 4px}
+.otp-inp{width:50px;height:56px;background:var(--card);border:1px solid var(--bdr);
+  border-radius:12px;text-align:center;font-family:'Syne',sans-serif;
+  font-size:1.4rem;font-weight:800;color:var(--white);outline:none;
+  transition:border-color .2s,box-shadow .2s}
+.otp-inp:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--tealg)}
+.otp-inp.filled{border-color:var(--teal);background:var(--tealg)}
+.otp-timer{text-align:center;font-size:.78rem;color:var(--gray);margin-bottom:4px}
+.otp-timer span{color:var(--saff);font-weight:700;font-family:'Syne',sans-serif}
+.otp-resend{text-align:center;font-size:.78rem;color:var(--gray)}
+.otp-resend button{background:none;border:none;color:var(--teal);font-family:'Syne',sans-serif;
+  font-weight:700;cursor:pointer;font-size:.78rem}
+
+/* PHONE INPUT */
+.phone-row{display:flex;gap:8px}
+.country-code{background:var(--card);border:1px solid var(--bdr);border-radius:12px;
+  padding:13px 14px;color:var(--white);font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.88rem;white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:6px}
+.phone-row .input-wrap{flex:1}
+.phone-row .input-wrap input{padding-left:14px}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.divider span{font-size:.74rem;color:var(--gray);font-family:'Syne',sans-serif;font-weight:600;white-space:nowrap}
+
+/* SOCIAL LOGIN */
+.social-btns{display:flex;gap:10px}
+.social-btn{flex:1;background:var(--card);border:1px solid var(--bdr);border-radius:12px;
+  padding:12px;display:flex;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;
+  color:var(--gray);transition:all .2s}
+.social-btn:hover{border-color:var(--teal);color:var(--white)}
+
+/* ADMIN NOTICE */
+.admin-notice{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.25);
+  border-radius:12px;padding:12px 15px;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+  font-size:.78rem;color:rgba(255,149,0,.85)}
+.admin-notice strong{font-family:'Syne',sans-serif;color:var(--saff)}
+
+/* BUTTONS */
+.btn-main{width:100%;background:var(--teal);color:var(--navy);
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;
+  letter-spacing:.04em;padding:14px;border-radius:12px;
+  border:none;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-main:hover{background:var(--teal2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,229,200,.3)}
+.btn-main.saff{background:var(--saff);color:#fff}
+.btn-main.saff:hover{background:var(--saff2);box-shadow:0 8px 24px rgba(255,149,0,.3)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-outline-sm{width:100%;background:transparent;border:1px solid var(--bdr);
+  color:var(--gray);font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;
+  padding:12px;border-radius:12px;cursor:pointer;transition:all .2s;margin-top:10px}
+.btn-outline-sm:hover{border-color:var(--teal);color:var(--teal)}
+
+/* LOADER SPINNER */
+.spinner{width:18px;height:18px;border:2px solid rgba(0,0,0,.2);
+  border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* STEP INDICATOR */
+.steps{display:flex;align-items:center;gap:6px;margin-bottom:24px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--bdr);transition:all .3s}
+.step-dot.active{background:var(--teal);width:24px;border-radius:4px}
+.step-dot.done{background:var(--green)}
+.step-label{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+  color:var(--gray);margin-left:8px;letter-spacing:.06em;text-transform:uppercase}
+
+/* PASSWORD STRENGTH */
+.pw-strength{margin-top:6px}
+.pw-bars{display:flex;gap:4px;margin-bottom:4px}
+.pw-bar{flex:1;height:3px;border-radius:2px;background:var(--bdr);transition:background .3s}
+.pw-bar.weak{background:var(--red)}
+.pw-bar.medium{background:var(--saff)}
+.pw-bar.strong{background:var(--green)}
+.pw-text{font-size:.7rem;color:var(--gray)}
+
+/* TERMS */
+.terms-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px}
+.terms-row input[type=checkbox]{width:16px;height:16px;margin-top:2px;accent-color:var(--teal);flex-shrink:0}
+.terms-row label{font-size:.78rem;color:var(--gray);line-height:1.5;cursor:pointer}
+.terms-row label a{color:var(--teal)}
+
+/* ROLE BADGE */
+.role-select{display:flex;gap:10px;margin-bottom:20px}
+.role-opt{flex:1;background:var(--card);border:2px solid var(--bdr);border-radius:12px;
+  padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s}
+.role-opt.active{border-color:var(--teal);background:var(--tealg)}
+.role-opt .role-icon{font-size:1.6rem;display:block;margin-bottom:6px}
+.role-opt .role-name{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700}
+.role-opt .role-desc{font-size:.68rem;color:var(--gray);margin-top:3px}
+
+/* FORGOT */
+.forgot-link{text-align:right;margin-top:-8px;margin-bottom:14px}
+.forgot-link a{font-size:.78rem;color:var(--teal);font-family:'Syne',sans-serif;font-weight:600;cursor:pointer}
+
+/* SUCCESS */
+.success-screen{text-align:center;padding:20px 0}
+.success-icon{font-size:4rem;margin-bottom:16px;display:block;animation:bounce .6s ease}
+@keyframes bounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.success-screen h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.success-screen p{color:var(--gray);font-size:.88rem;line-height:1.7}
+
+/* TOAST */
+.toast{position:fixed;top:24px;right:24px;z-index:999;
+  background:var(--card);border:1px solid var(--teal);border-radius:12px;
+  padding:12px 20px;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--teal);opacity:0;transform:translateY(-10px);transition:all .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red);color:var(--red)}
+
+/* BACK LINK */
+.back-to-store{display:flex;align-items:center;gap:6px;color:var(--gray);
+  font-size:.78rem;font-family:'Syne',sans-serif;font-weight:600;
+  cursor:pointer;margin-bottom:24px;transition:color .2s}
+.back-to-store:hover{color:var(--teal)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .brand-panel{display:none}
+  .auth-panel{padding:24px 20px}
+  html,body{overflow:auto}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="bg-grid"></div>
+<div class="bg-particles" id="particles"></div>
+
+<div class="split">
+
+  <!-- LEFT BRAND PANEL -->
+  <div class="brand-panel">
+    <div class="brand-top">
+      <div class="logo">Paani<span>trendzz</span></div>
+      <div class="flag">🇮🇳 India Ka Trending Store</div>
+    </div>
+    <div class="brand-mid">
+      <h2>Welcome to<br/><span class="tc">India's Most</span><br/><span class="ts">Trending Store</span></h2>
+      <div class="hin">Apna account banao, trending products order karo! 🇮🇳</div>
+      <div class="perks">
+        <div class="perk">
+          <div class="perk-icon">🕯️</div>
+          <div class="perk-text"><strong>Handcrafted Candles</strong><span>Made in India · Pure soy wax · 40hr burn</span></div>
+        </div>
+        <div class="perk">
+          <div class="perk-icon">💵</div>
+          <div class="perk-text"><strong>Cash on Delivery Available</strong><span>Pan-India COD · No prepayment needed</span></div>
+        </div>
+        <div class="perk">
+          <div class="perk-icon">🔄</div>
+          <div class="perk-text"><strong>15-Day Easy Returns</strong><span>No questions asked · Full refund</span></div>
+        </div>
+        <div class="perk">
+          <div class="perk-icon">📦</div>
+          <div class="perk-text"><strong>Track Your Orders Live</strong><span>Real-time updates on every order</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-bot">
+      By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.<br/>
+      © 2026 Paanitrendzz · Hyderabad, Telangana 🇮🇳
+    </div>
+  </div>
+
+  <!-- RIGHT AUTH PANEL -->
+  <div class="auth-panel">
+    <div class="auth-box">
+
+      <div class="back-to-store" onclick="window.location.href='index.html'">
+        ← Back to Store
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs" id="mainTabs">
+        <div class="tab active" onclick="switchTab('login')">🔐 Login</div>
+        <div class="tab" onclick="switchTab('register')">✨ Register</div>
+      </div>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- LOGIN SCREEN                   -->
+      <!-- ═══════════════════════════════ -->
+      <div class="screen active" id="screen-login">
+        <div class="screen-title">Welcome Back! 👋</div>
+        <div class="screen-sub">Login to your account · <strong>Admin?</strong> Use your admin credentials below</div>
+
+        <!-- ADMIN NOTICE (shows when admin email typed) -->
+        <div class="admin-notice" id="adminNotice" style="display:none">
+          <span>🔐</span>
+          <div><strong>Admin Login Detected</strong> — You will be redirected to the Admin Console</div>
+        </div>
+
+        <div class="form-row">
+          <label>Mobile Number or Email</label>
+          <div class="input-wrap">
+            <span class="icon">👤</span>
+            <input type="text" id="loginId" placeholder="9876543210 or you@email.com"
+              oninput="detectAdmin(this.value)" autocomplete="username"/>
+          </div>
+          <div class="input-hint" id="loginIdHint"></div>
+        </div>
+
+        <div class="form-row">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="icon">🔒</span>
+            <input type="password" id="loginPw" placeholder="Enter your password"
+              onkeydown="if(event.key==='Enter')doLogin()" autocomplete="current-password"/>
+            <span class="eye" onclick="togglePw('loginPw',this)">👁️</span>
+          </div>
+        </div>
+
+        <div class="forgot-link"><a onclick="switchScreen('forgot')">Forgot Password?</a></div>
+
+        <button class="btn-main" id="loginBtn" onclick="doLogin()">
+          <span id="loginBtnTxt">Login to Account</span>
+        </button>
+
+        <div class="divider"><span>or continue with</span></div>
+        <div class="social-btns">
+          <div class="social-btn" onclick="googleLogin()">🇬 Google</div>
+          <div class="social-btn" onclick="showToast('📲 WhatsApp OTP sent!','ok')">📲 WhatsApp</div>
+        </div>
+
+        <div style="text-align:center;margin-top:20px;font-size:.8rem;color:var(--gray)">
+          New to Paanitrendzz? <a onclick="switchTab('register')" style="color:var(--teal);font-weight:700;cursor:pointer">Create Account →</a>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- REGISTER SCREEN                -->
+      <!-- ═══════════════════════════════ -->
+      <div class="screen" id="screen-register">
+        <div class="steps">
+          <div class="step-dot active" id="sdot1"></div>
+          <div class="step-dot" id="sdot2"></div>
+          <div class="step-dot" id="sdot3"></div>
+          <span class="step-label" id="stepLabel">Your Details</span>
+        </div>
+
+        <!-- STEP 1 — DETAILS -->
+        <div id="reg-step1">
+          <div class="screen-title">Create Account ✨</div>
+          <div class="screen-sub">Join 50,000+ Indians already shopping on Paanitrendzz 🇮🇳</div>
+
+          <div class="form-row">
+            <label>Full Name</label>
+            <div class="input-wrap">
+              <span class="icon">👤</span>
+              <input type="text" id="regName" placeholder="Your full name" oninput="validateName(this)"/>
+            </div>
+            <div class="input-hint" id="nameHint"></div>
+          </div>
+
+          <div class="form-row">
+            <label>Mobile Number</label>
+            <div class="phone-row">
+              <div class="country-code">🇮🇳 +91</div>
+              <div class="input-wrap">
+                <input type="tel" id="regMobile" placeholder="9876543210" maxlength="10"
+                  oninput="validateMobile(this)"/>
+              </div>
+            </div>
+            <div class="input-hint" id="mobileHint"></div>
+          </div>
+
+          <div class="form-row">
+            <label>Email Address <span style="color:var(--gray);font-size:.68rem;text-transform:none;letter-spacing:0">(optional)</span></label>
+            <div class="input-wrap">
+              <span class="icon">✉️</span>
+              <input type="email" id="regEmail" placeholder="your@email.com" oninput="validateEmail(this)"/>
+            </div>
+            <div class="input-hint" id="emailHint"></div>
+          </div>
+
+          <button class="btn-main" id="step1Btn" onclick="goStep2()">
+            Continue → Get OTP
+          </button>
+        </div>
+
+        <!-- STEP 2 — OTP -->
+        <div id="reg-step2" style="display:none">
+          <div class="screen-title">Verify Mobile 📲</div>
+          <div class="screen-sub">OTP sent to <strong id="otpMobileShow"></strong> · Check SMS</div>
+
+          <div class="otp-wrap" id="otpInputs">
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,0)"/>
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,1)"/>
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,2)"/>
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,3)"/>
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,4)"/>
+            <input class="otp-inp" maxlength="1" type="tel" oninput="otpMove(this,5)"/>
+          </div>
+          <div class="otp-timer">Resend in <span id="timerCount">30</span>s</div>
+          <div class="otp-resend"><button id="resendBtn" disabled onclick="resendOTP()">Resend OTP</button></div>
+
+          <div style="text-align:center;margin:12px 0;font-size:.78rem;color:var(--saff)">
+            💡 Demo OTP: <strong>123456</strong>
+          </div>
+
+          <button class="btn-main" id="otpVerifyBtn" onclick="verifyOTP()" disabled>
+            <span id="otpBtnTxt">Verify OTP</span>
+          </button>
+          <button class="btn-outline-sm" onclick="backToStep1()">← Change Number</button>
+        </div>
+
+        <!-- STEP 3 — SET PASSWORD -->
+        <div id="reg-step3" style="display:none">
+          <div class="screen-title">Set Password 🔒</div>
+          <div class="screen-sub">Almost there! Create a strong password for your account.</div>
+
+          <div class="form-row">
+            <label>Create Password</label>
+            <div class="input-wrap">
+              <span class="icon">🔒</span>
+              <input type="password" id="regPw" placeholder="Min 8 characters" oninput="checkPwStrength(this.value)"/>
+              <span class="eye" onclick="togglePw('regPw',this)">👁️</span>
+            </div>
+            <div class="pw-strength">
+              <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div></div>
+              <div class="pw-text" id="pwTxt">Enter a password</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Confirm Password</label>
+            <div class="input-wrap">
+              <span class="icon">🔒</span>
+              <input type="password" id="regPwConf" placeholder="Re-enter password" oninput="checkPwMatch()"/>
+              <span class="eye" onclick="togglePw('regPwConf',this)">👁️</span>
+            </div>
+            <div class="input-hint" id="pwMatchHint"></div>
+          </div>
+
+          <div class="terms-row">
+            <input type="checkbox" id="termsChk"/>
+            <label for="termsChk">I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a> and <a href="#">Return Policy (15 Days)</a> of Paanitrendzz</label>
+          </div>
+
+          <button class="btn-main saff" id="finalRegBtn" onclick="completeRegistration()">
+            <span id="regBtnTxt">🎉 Create My Account</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- FORGOT PASSWORD SCREEN         -->
+      <!-- ═══════════════════════════════ -->
+      <div class="screen" id="screen-forgot">
+        <div class="screen-title">Reset Password 🔑</div>
+        <div class="screen-sub">Enter your registered mobile or email. We'll send a reset OTP.</div>
+        <div class="form-row">
+          <label>Mobile or Email</label>
+          <div class="input-wrap">
+            <span class="icon">👤</span>
+            <input type="text" id="forgotId" placeholder="9876543210 or you@email.com"/>
+          </div>
+        </div>
+        <button class="btn-main" onclick="sendForgotOTP()">Send Reset OTP 📲</button>
+        <button class="btn-outline-sm" onclick="switchTab('login')">← Back to Login</button>
+      </div>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- SUCCESS SCREEN                 -->
+      <!-- ═══════════════════════════════ -->
+      <div class="screen" id="screen-success">
+        <div class="success-screen">
+          <span class="success-icon" id="successIcon">🎉</span>
+          <h2 id="successTitle">Account Created!</h2>
+          <p id="successMsg">Welcome to Paanitrendzz! Redirecting you to your account…</p>
+          <div style="margin-top:24px">
+            <button class="btn-main" id="successBtn" onclick="window.location.href='account.html'">
+              Go to My Account →
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DEMO CREDENTIALS ──
+// Admin: admin@paanitrendzz.com / Admin@123 OR mobile: 8297744626 / Admin@123
+// User demo: any registered account
+const ADMIN_CREDENTIALS=[
+  {id:'admin@paanitrendzz.com',pw:'Admin@123'},
+  {id:'8297744626',pw:'Admin@123'},
+];
+const DEMO_USERS=JSON.parse(localStorage.getItem('pt_users')||'[]');
+
+// ── PARTICLES ──
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<18;i++){
+    const d=document.createElement('div');
+    d.className='particle';
+    const sz=Math.random()*4+2;
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;
+      background:${Math.random()>.5?'rgba(0,229,200,.4)':'rgba(255,149,0,.3)'};
+      animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s`;
+    c.appendChild(d);
+  }
+})();
+
+// ── TAB SWITCH ──
+let currentTab='login';
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',
+    (tab==='login'&&i===0)||(tab==='register'&&i===1)));
+  showScreen(tab==='login'?'login':'register');
+  if(tab==='register') resetRegister();
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+}
+function switchScreen(id){showScreen(id);}
+
+// ── DETECT ADMIN ──
+function detectAdmin(val){
+  const isAdmin=ADMIN_CREDENTIALS.some(c=>c.id===val.trim());
+  const notice=document.getElementById('adminNotice');
+  const btn=document.getElementById('loginBtnTxt');
+  const input=document.getElementById('loginId');
+  if(isAdmin){
+    notice.style.display='flex';
+    btn.textContent='🔐 Login as Admin';
+    input.classList.add('success');
+  } else {
+    notice.style.display='none';
+    btn.textContent='Login to Account';
+    input.classList.remove('success');
+  }
+}
+
+// ── DO LOGIN ──
+function doLogin(){
+  const id=document.getElementById('loginId').value.trim();
+  const pw=document.getElementById('loginPw').value;
+  const btn=document.getElementById('loginBtn');
+  if(!id||!pw){showToast('Please fill all fields','err');return;}
+
+  // Show loader
+  btn.innerHTML='<div class="spinner"></div>';
+  btn.disabled=true;
+
+  setTimeout(()=>{
+    // Check admin
+    const isAdmin=ADMIN_CREDENTIALS.some(c=>c.id===id&&c.pw===pw);
+    if(isAdmin){
+      showToast('✅ Admin login successful! Redirecting…','ok');
+      setTimeout(()=>window.location.href='admin.html',1200);
+      return;
+    }
+    // Check registered users
+    const users=JSON.parse(localStorage.getItem('pt_users')||'[]');
+    const user=users.find(u=>(u.mobile===id||u.email===id)&&u.pw===pw);
+    if(user){
+      localStorage.setItem('pt_session',JSON.stringify({name:user.name,mobile:user.mobile,email:user.email,role:'customer'}));
+      showToast('✅ Welcome back, '+user.name+'!','ok');
+      setTimeout(()=>window.location.href='account.html',1200);
+      return;
+    }
+    // Failed
+    btn.innerHTML='<span id="loginBtnTxt">Login to Account</span>';
+    btn.disabled=false;
+    document.getElementById('loginId').classList.add('error');
+    document.getElementById('loginPw').classList.add('error');
+    showToast('❌ Invalid credentials. Try again.','err');
+  },1400);
+}
+
+// ── REGISTER STEPS ──
+let regStep=1;
+function goStep2(){
+  const name=document.getElementById('regName').value.trim();
+  const mobile=document.getElementById('regMobile').value.trim();
+  if(!name||name.length<2){showToast('Please enter your full name','err');return;}
+  if(!/^[6-9]\d{9}$/.test(mobile)){showToast('Enter valid 10-digit Indian mobile number','err');return;}
+  // Check if already registered
+  const users=JSON.parse(localStorage.getItem('pt_users')||'[]');
+  if(users.find(u=>u.mobile===mobile)){showToast('Mobile already registered! Please login.','err');return;}
+  document.getElementById('otpMobileShow').textContent='+91 '+mobile;
+  setStep(2);
+  startOTPTimer();
+  showToast('📲 OTP sent to +91 '+mobile+' (Demo: 123456)','ok');
+}
+
+function backToStep1(){setStep(1);}
+
+function setStep(n){
+  regStep=n;
+  ['reg-step1','reg-step2','reg-step3'].forEach((id,i)=>{
+    document.getElementById(id).style.display=(i+1===n)?'block':'none';
+  });
+  const labels=['Your Details','Verify Mobile','Set Password'];
+  document.getElementById('stepLabel').textContent=labels[n-1];
+  ['sdot1','sdot2','sdot3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.className='step-dot'+(i+1===n?' active':i+1<n?' done':'');
+  });
+}
+
+function resetRegister(){setStep(1);}
+
+// ── OTP LOGIC ──
+let otpTimer=null;
+function startOTPTimer(){
+  let t=30;document.getElementById('timerCount').textContent=t;
+  document.getElementById('resendBtn').disabled=true;
+  clearInterval(otpTimer);
+  otpTimer=setInterval(()=>{
+    t--;document.getElementById('timerCount').textContent=t;
+    if(t<=0){clearInterval(otpTimer);document.getElementById('resendBtn').disabled=false;
+      document.querySelector('.otp-timer').innerHTML='OTP expired. <span style="color:var(--red)">Resend now</span>';}
+  },1000);
+}
+
+function otpMove(inp,idx){
+  inp.classList.toggle('filled',inp.value.length>0);
+  const inputs=document.querySelectorAll('.otp-inp');
+  if(inp.value&&idx<5)inputs[idx+1].focus();
+  if(!inp.value&&idx>0&&event.inputType==='deleteContentBackward')inputs[idx-1].focus();
+  // Check if all filled
+  const all=[...inputs].every(i=>i.value.length===1);
+  document.getElementById('otpVerifyBtn').disabled=!all;
+}
+
+function verifyOTP(){
+  const inputs=document.querySelectorAll('.otp-inp');
+  const otp=[...inputs].map(i=>i.value).join('');
+  const btn=document.getElementById('otpVerifyBtn');
+  btn.innerHTML='<div class="spinner"></div>';btn.disabled=true;
+  setTimeout(()=>{
+    if(otp==='123456'){
+      showToast('✅ Mobile verified successfully!','ok');
+      setStep(3);
+    } else {
+      inputs.forEach(i=>i.classList.add('error',i.classList.remove('filled')));
+      btn.innerHTML='<span id="otpBtnTxt">Verify OTP</span>';btn.disabled=false;
+      showToast('❌ Incorrect OTP. Try 123456','err');
+    }
+  },1000);
+}
+
+function resendOTP(){
+  document.querySelectorAll('.otp-inp').forEach(i=>{i.value='';i.classList.remove('filled','error')});
+  document.getElementById('otpVerifyBtn').disabled=true;
+  startOTPTimer();
+  showToast('📲 New OTP sent! (Demo: 123456)','ok');
+}
+
+// ── PASSWORD STRENGTH ──
+function checkPwStrength(pw){
+  const bars=[document.getElementById('pb1'),document.getElementById('pb2'),
+    document.getElementById('pb3'),document.getElementById('pb4')];
+  const txt=document.getElementById('pwTxt');
+  bars.forEach(b=>b.className='pw-bar');
+  if(!pw){txt.textContent='Enter a password';return;}
+  let score=0;
+  if(pw.length>=8)score++;
+  if(/[A-Z]/.test(pw))score++;
+  if(/[0-9]/.test(pw))score++;
+  if(/[^A-Za-z0-9]/.test(pw))score++;
+  const levels=[['weak','Weak — too short'],['medium','Fair — add numbers'],['medium','Good — add symbols'],['strong','Strong password ✅']];
+  const [cls,msg]=levels[score-1]||['',''];
+  for(let i=0;i<score;i++)bars[i].classList.add(score<=1?'weak':score<=2?'medium':'strong');
+  txt.textContent=score>0?msg:'';
+}
+
+function checkPwMatch(){
+  const pw=document.getElementById('regPw').value;
+  const cf=document.getElementById('regPwConf').value;
+  const hint=document.getElementById('pwMatchHint');
+  if(!cf)return;
+  if(pw===cf){hint.textContent='✅ Passwords match';hint.className='input-hint ok';}
+  else{hint.textContent='❌ Passwords do not match';hint.className='input-hint err';}
+}
+
+// ── COMPLETE REGISTRATION ──
+function completeRegistration(){
+  const pw=document.getElementById('regPw').value;
+  const cf=document.getElementById('regPwConf').value;
+  const terms=document.getElementById('termsChk').checked;
+  if(pw.length<8){showToast('Password must be at least 8 characters','err');return;}
+  if(pw!==cf){showToast('Passwords do not match','err');return;}
+  if(!terms){showToast('Please accept the Terms & Conditions','err');return;}
+  const btn=document.getElementById('finalRegBtn');
+  btn.innerHTML='<div class="spinner"></div>';btn.disabled=true;
+  setTimeout(()=>{
+    const name=document.getElementById('regName').value.trim();
+    const mobile=document.getElementById('regMobile').value.trim();
+    const email=document.getElementById('regEmail').value.trim();
+    const users=JSON.parse(localStorage.getItem('pt_users')||'[]');
+    const newUser={name,mobile,email,pw,role:'customer',joined:new Date().toISOString(),orders:[]};
+    users.push(newUser);
+    localStorage.setItem('pt_users',JSON.stringify(users));
+    localStorage.setItem('pt_session',JSON.stringify({name,mobile,email,role:'customer'}));
+    showSuccessScreen('🎉','Welcome, '+name+'! 🇮🇳','Your account is ready! Redirecting to your account…','account.html');
+  },1400);
+}
+
+function showSuccessScreen(icon,title,msg,redirect){
+  document.getElementById('successIcon').textContent=icon;
+  document.getElementById('successTitle').textContent=title;
+  document.getElementById('successMsg').textContent=msg;
+  document.getElementById('successBtn').onclick=()=>window.location.href=redirect;
+  document.getElementById('mainTabs').style.display='none';
+  showScreen('success');
+  setTimeout(()=>window.location.href=redirect,2500);
+}
+
+// ── FORGOT PASSWORD ──
+function sendForgotOTP(){
+  const id=document.getElementById('forgotId').value.trim();
+  if(!id){showToast('Please enter mobile or email','err');return;}
+  showToast('📲 Reset OTP sent to '+id,'ok');
+  setTimeout(()=>switchTab('login'),1500);
+}
+
+// ── VALIDATORS ──
+function validateName(inp){
+  const h=document.getElementById('nameHint');
+  if(inp.value.length>=2){h.textContent='✅ Looks good!';h.className='input-hint ok';inp.classList.add('success');inp.classList.remove('error');}
+  else{h.textContent='Please enter at least 2 characters';h.className='input-hint err';}
+}
+function validateMobile(inp){
+  const h=document.getElementById('mobileHint');
+  inp.value=inp.value.replace(/\D/,'');
+  if(/^[6-9]\d{9}$/.test(inp.value)){h.textContent='✅ Valid Indian mobile number';h.className='input-hint ok';inp.classList.add('success');inp.classList.remove('error');}
+  else if(inp.value.length>0){h.textContent='Enter valid 10-digit number starting with 6-9';h.className='input-hint err';}
+}
+function validateEmail(inp){
+  const h=document.getElementById('emailHint');
+  if(!inp.value)return;
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)){h.textContent='✅ Valid email';h.className='input-hint ok';}
+  else{h.textContent='Enter a valid email address';h.className='input-hint err';}
+}
+
+// ── HELPERS ──
+function togglePw(id,eye){
+  const inp=document.getElementById(id);
+  inp.type=inp.type==='password'?'text':'password';
+  eye.textContent=inp.type==='password'?'👁️':'🙈';
+}
+function googleLogin(){showToast('🇬 Google login coming soon!','ok');}
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type==='err'?' err':'');
+  clearTimeout(window._toastTO);
+  window._toastTO=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── AUTO REDIRECT IF LOGGED IN ──
+const sess=localStorage.getItem('pt_session');
+if(sess){
+  const s=JSON.parse(sess);
+  if(s.role==='admin')window.location.href='admin.html';
+  // don't auto-redirect customers so they can see the login page
+}
+</script>
+</body>
+</html>

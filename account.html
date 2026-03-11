@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>My Account – Paanitrendzz</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#080E1A;--navy2:#0D1B30;--navy3:#112240;
+  --teal:#00E5C8;--teal2:#00b8a0;--tealg:rgba(0,229,200,.13);
+  --saff:#FF9500;--saff2:#e07800;--saffg:rgba(255,149,0,.11);
+  --white:#F0F8FF;--gray:#7A8599;--card:#0F1E35;--card2:#162540;
+  --bdr:rgba(0,229,200,.12);--green:#22C55E;--red:#EF4444;--gold:#FFD700;
+  --sidebar:240px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column}
+
+/* HEADER */
+.acc-header{background:rgba(8,14,26,.98);border-bottom:1px solid var(--bdr);
+  padding:0 4%;height:62px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;flex-shrink:0}
+.logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.03em}
+.logo span{color:var(--teal)}
+.hdr-r{display:flex;align-items:center;gap:12px}
+.hdr-btn{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;
+  padding:8px 16px;border-radius:10px;cursor:pointer;transition:all .2s;border:none}
+.hdr-store{background:var(--teal);color:var(--navy)}
+.hdr-store:hover{background:var(--teal2)}
+.hdr-logout{background:var(--card2);border:1px solid var(--bdr);color:var(--gray)}
+.hdr-logout:hover{border-color:var(--red);color:var(--red)}
+.user-chip{display:flex;align-items:center;gap:9px;background:var(--card2);
+  border:1px solid var(--bdr);border-radius:22px;padding:6px 14px 6px 8px}
+.user-ava{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--navy)}
+.user-name{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700}
+
+/* LAYOUT */
+.acc-body{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.acc-sidebar{width:var(--sidebar);background:var(--navy2);border-right:1px solid var(--bdr);
+  padding:20px 14px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;flex-shrink:0}
+.acc-nav-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:11px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:500;
+  color:var(--gray);transition:all .2s;border:1px solid transparent}
+.acc-nav-item:hover{background:var(--card);color:var(--white)}
+.acc-nav-item.active{background:var(--tealg);border-color:var(--bdr);color:var(--teal)}
+.acc-nav-item .ni{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.acc-nav-item .nb{margin-left:auto;background:var(--saff);color:var(--navy);
+  font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:10px;font-family:'Syne',sans-serif}
+.nav-section{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gray);
+  padding:8px 14px 4px;margin-top:8px}
+
+/* MAIN */
+.acc-main{flex:1;overflow-y:auto;padding:28px 32px}
+.panel{display:none}.panel.active{display:block}
+.page-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;
+  letter-spacing:-.02em;margin-bottom:6px}
+.page-sub{font-size:.85rem;color:var(--gray);margin-bottom:24px}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.stat-c{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  transition:transform .2s,border-color .2s}
+.stat-c:hover{transform:translateY(-2px);border-color:rgba(0,229,200,.25)}
+.stat-icon{font-size:1.5rem;display:block;margin-bottom:10px}
+.stat-val{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:3px}
+.stat-lbl{font-size:.74rem;color:var(--gray)}
+
+/* ORDERS */
+.order-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;
+  padding:18px;margin-bottom:14px;transition:border-color .2s}
+.order-card:hover{border-color:rgba(0,229,200,.25)}
+.oc-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.oc-id{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--teal)}
+.oc-date{font-size:.76rem;color:var(--gray)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-family:'Syne',sans-serif;
+  font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.03em}
+.bd{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.bs{background:rgba(0,229,200,.15);color:var(--teal);border:1px solid var(--bdr)}
+.bp{background:rgba(255,149,0,.15);color:var(--saff);border:1px solid rgba(255,149,0,.25)}
+.bc{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.bpr{background:rgba(139,92,246,.15);color:#8B5CF6;border:1px solid rgba(139,92,246,.25)}
+.oc-items{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.oi{display:flex;align-items:center;gap:12px}
+.oi-thumb{width:44px;height:44px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-size:1.5rem;flex-shrink:0}
+.oi-1{background:linear-gradient(135deg,#1a0800,#3d1500)}
+.oi-2{background:linear-gradient(135deg,#050d20,#112240)}
+.oi-name{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;flex:1}
+.oi-qty{font-size:.74rem;color:var(--gray)}
+.oi-price{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--teal)}
+.oi-price::before{content:'₹'}
+.oc-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding-top:12px;border-top:1px solid var(--bdr)}
+.oc-total{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:800}
+.oc-total::before{content:'Total: ₹'}
+.oc-actions{display:flex;gap:8px}
+.oa-btn{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;
+  padding:7px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--bdr);
+  background:var(--card2);color:var(--gray);transition:all .2s}
+.oa-btn:hover{border-color:var(--teal);color:var(--teal)}
+.oa-btn.return:hover{border-color:var(--saff);color:var(--saff)}
+.oc-track{margin-bottom:14px}
+.track-bar{display:flex;align-items:center;gap:0;margin-top:8px}
+.track-step{display:flex;flex-direction:column;align-items:center;flex:1}
+.track-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;
+  background:var(--navy);position:relative;z-index:1;flex-shrink:0}
+.track-dot.done{background:var(--green);border-color:var(--green)}
+.track-dot.active{background:var(--teal);border-color:var(--teal);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,200,.4)}50%{box-shadow:0 0 0 6px rgba(0,229,200,0)}}
+.track-line{flex:1;height:2px;background:var(--bdr);margin:0 -1px;position:relative;top:-12px;z-index:0}
+.track-line.done{background:var(--green)}
+.track-lbl{font-size:.62rem;color:var(--gray);margin-top:6px;text-align:center;
+  font-family:'Syne',sans-serif;font-weight:600;letter-spacing:.04em}
+.track-lbl.done{color:var(--green)}.track-lbl.active{color:var(--teal)}
+
+/* WISHLIST */
+.wish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.wc{background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;
+  transition:transform .2s,border-color .2s}
+.wc:hover{transform:translateY(-3px);border-color:rgba(0,229,200,.25)}
+.wc-img{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.wc-i1{background:linear-gradient(135deg,#1a0800,#3d1500)}
+.wc-i2{background:linear-gradient(135deg,#050d20,#112240)}
+.wc-i3{background:linear-gradient(135deg,#0d1400,#1e2e00)}
+.wc-info{padding:14px}
+.wc-name{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;margin-bottom:6px}
+.wc-price{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.wc-now{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--teal)}
+.wc-now::before{content:'₹'}
+.wc-was{font-size:.76rem;color:var(--gray);text-decoration:line-through}
+.wc-was::before{content:'₹'}
+.wc-btn{width:100%;background:var(--teal);color:var(--navy);border:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.05em;
+  padding:10px;border-radius:8px;transition:background .2s}
+.wc-btn:hover{background:var(--teal2)}
+.wc-remove{position:absolute;top:10px;right:10px;background:rgba(8,14,26,.8);
+  border:1px solid var(--bdr);border-radius:8px;width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;
+  transition:border-color .2s}
+.wc-remove:hover{border-color:var(--red)}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.profile-box{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:22px}
+.profile-box h3{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--bdr)}
+.form-row{margin-bottom:14px}
+.form-row label{font-family:'Syne',sans-serif;font-size:.71rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:6px}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;background:var(--navy2);border:1px solid var(--bdr);border-radius:10px;
+  padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.85rem;
+  outline:none;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus{border-color:var(--teal)}
+.form-row select option{background:var(--navy2)}
+.btn-save{background:var(--teal);color:var(--navy);font-family:'Syne',sans-serif;
+  font-weight:800;font-size:.8rem;letter-spacing:.04em;padding:11px 24px;border-radius:10px;
+  border:none;cursor:pointer;transition:all .2s;margin-top:6px}
+.btn-save:hover{background:var(--teal2)}
+.avatar-section{text-align:center;margin-bottom:20px}
+.big-ava{width:80px;height:80px;border-radius:50%;margin:0 auto 12px;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;font-weight:800;color:var(--navy);font-family:'Syne',sans-serif}
+.ava-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.ava-since{font-size:.74rem;color:var(--gray)}
+.toggle{width:42px;height:24px;border-radius:12px;background:var(--navy2);
+  border:1px solid var(--bdr);position:relative;cursor:pointer;transition:background .2s}
+.toggle.on{background:var(--teal)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:transform .2s}
+.toggle.on::after{transform:translateX(18px)}
+.sett-item{display:flex;align-items:center;justify-content:space-between;
+  padding:11px 0;border-bottom:1px solid rgba(0,229,200,.06)}
+.sett-item:last-child{border-bottom:none}
+.sett-l strong{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:600;display:block}
+.sett-l span{font-size:.72rem;color:var(--gray)}
+
+/* ADDRESSES */
+.addr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+.addr-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:18px;
+  position:relative;transition:border-color .2s}
+.addr-card.default{border-color:var(--teal)}
+.addr-card:hover{border-color:rgba(0,229,200,.3)}
+.addr-default{position:absolute;top:12px;right:12px;background:var(--tealg);
+  border:1px solid var(--bdr);border-radius:20px;padding:3px 9px;
+  font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;color:var(--teal)}
+.addr-name{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:5px}
+.addr-text{font-size:.8rem;color:var(--gray);line-height:1.6;margin-bottom:12px}
+.addr-actions{display:flex;gap:8px}
+.addr-btn{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+  padding:6px 12px;border-radius:7px;cursor:pointer;border:1px solid var(--bdr);
+  background:var(--card2);color:var(--gray);transition:all .2s}
+.addr-btn:hover{border-color:var(--teal);color:var(--teal)}
+.addr-btn.del:hover{border-color:var(--red);color:var(--red)}
+.add-addr{background:var(--card);border:2px dashed var(--bdr);border-radius:14px;
+  padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;gap:10px;transition:border-color .2s;color:var(--gray)}
+.add-addr:hover{border-color:var(--teal);color:var(--teal)}
+.add-addr .plus{font-size:2rem}
+.add-addr span{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700}
+
+/* REFER */
+.refer-box{background:linear-gradient(135deg,rgba(0,229,200,.06),rgba(255,149,0,.06));
+  border:1px solid var(--bdr);border-radius:16px;padding:28px;text-align:center;margin-bottom:20px}
+.refer-box h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.refer-box p{color:var(--gray);font-size:.88rem;margin-bottom:20px;line-height:1.7}
+.refer-code{background:var(--card);border:2px dashed var(--teal);border-radius:12px;
+  padding:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.refer-code span{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal);letter-spacing:.1em}
+.copy-btn{background:var(--teal);color:var(--navy);font-family:'Syne',sans-serif;
+  font-weight:800;font-size:.78rem;padding:9px 18px;border-radius:9px;border:none;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:var(--teal2)}
+.refer-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.rs{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:16px;text-align:center}
+.rs-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.rs-lbl{font-size:.72rem;color:var(--gray)}
+
+/* TOAST */
+.toast{position:fixed;top:80px;right:24px;z-index:999;
+  background:var(--card);border:1px solid var(--teal);border-radius:12px;
+  padding:11px 20px;font-family:'Syne',sans-serif;font-size:.81rem;font-weight:700;
+  color:var(--teal);opacity:0;transform:translateY(-10px);transition:all .3s}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red);color:var(--red)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--navy2)}
+::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,229,200,.3)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .acc-sidebar{display:none}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .wish-grid,.profile-grid,.addr-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="acc-header">
+  <div class="logo">Paani<span>trendzz</span> 🇮🇳</div>
+  <div class="hdr-r">
+    <div class="user-chip">
+      <div class="user-ava" id="userAva">?</div>
+      <div class="user-name" id="userName">Loading…</div>
+    </div>
+    <button class="hdr-btn hdr-store" onclick="window.location.href='index.html'">🛍️ Shop Now</button>
+    <button class="hdr-btn hdr-logout" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<div class="acc-body">
+
+  <!-- SIDEBAR -->
+  <aside class="acc-sidebar">
+    <div class="nav-section">My Account</div>
+    <div class="acc-nav-item active" onclick="showPanel('overview',this)"><span class="ni">📊</span>Overview</div>
+    <div class="acc-nav-item" onclick="showPanel('orders',this)"><span class="ni">📦</span>My Orders<span class="nb" id="orderBadge">3</span></div>
+    <div class="acc-nav-item" onclick="showPanel('wishlist',this)"><span class="ni">❤️</span>Wishlist</div>
+    <div class="nav-section">Account</div>
+    <div class="acc-nav-item" onclick="showPanel('profile',this)"><span class="ni">👤</span>Profile</div>
+    <div class="acc-nav-item" onclick="showPanel('addresses',this)"><span class="ni">📍</span>Addresses</div>
+    <div class="acc-nav-item" onclick="showPanel('refer',this)"><span class="ni">🎁</span>Refer & Earn</div>
+    <div class="acc-nav-item" onclick="showPanel('settings',this)"><span class="ni">⚙️</span>Settings</div>
+    <div style="margin-top:auto;padding-top:16px">
+      <div class="acc-nav-item" onclick="logout()" style="color:var(--red)"><span class="ni">🚪</span>Logout</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="acc-main">
+
+    <!-- OVERVIEW -->
+    <div class="panel active" id="panel-overview">
+      <div class="page-title" id="welcomeTitle">Welcome back! 👋</div>
+      <div class="page-sub">Here's a summary of your Paanitrendzz account 🇮🇳</div>
+      <div class="stat-row">
+        <div class="stat-c"><span class="stat-icon">📦</span><div class="stat-val" style="color:var(--saff)">5</div><div class="stat-lbl">Total Orders</div></div>
+        <div class="stat-c"><span class="stat-icon">✅</span><div class="stat-val" style="color:var(--green)">3</div><div class="stat-lbl">Delivered</div></div>
+        <div class="stat-c"><span class="stat-icon">🚚</span><div class="stat-val" style="color:var(--teal)">1</div><div class="stat-lbl">In Transit</div></div>
+        <div class="stat-c"><span class="stat-icon">💰</span><div class="stat-val" style="color:var(--teal)">₹6,842</div><div class="stat-lbl">Total Spent</div></div>
+      </div>
+
+      <!-- Recent Order -->
+      <div style="font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--gray);margin-bottom:14px;text-transform:uppercase;letter-spacing:.08em">📦 Recent Orders</div>
+      <div class="order-card">
+        <div class="oc-top">
+          <div>
+            <div class="oc-id">#PT-18471</div>
+            <div class="oc-date">Placed: 11 March 2026 · 3 items</div>
+          </div>
+          <span class="badge bd">✅ Delivered</span>
+        </div>
+        <div class="oc-track">
+          <div style="font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;color:var(--gray);margin-bottom:8px">📍 Order Tracking</div>
+          <div class="track-bar">
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Ordered</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Confirmed</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Packed</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Shipped</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-lbl done">Delivered</div></div>
+          </div>
+        </div>
+        <div class="oc-items">
+          <div class="oi"><div class="oi-thumb oi-1">🕯️</div><div class="oi-name">Rose & Oud Luxury Soy Candle</div><div class="oi-qty">×2</div><div class="oi-price">1398</div></div>
+          <div class="oi"><div class="oi-thumb oi-2">🎧</div><div class="oi-name">Pro Wireless Earbuds</div><div class="oi-qty">×1</div><div class="oi-price">1299</div></div>
+        </div>
+        <div class="oc-bot">
+          <div class="oc-total">2697</div>
+          <div class="oc-actions">
+            <div class="oa-btn">⭐ Review</div>
+            <div class="oa-btn return">🔄 Return</div>
+            <div class="oa-btn">🧾 Invoice</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-card">
+        <div class="oc-top">
+          <div>
+            <div class="oc-id">#PT-18450</div>
+            <div class="oc-date">Placed: 8 March 2026 · 1 item</div>
+          </div>
+          <span class="badge bs">🚚 Shipped</span>
+        </div>
+        <div class="oc-track">
+          <div style="font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;color:var(--gray);margin-bottom:8px">📍 Order Tracking</div>
+          <div class="track-bar">
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Ordered</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Confirmed</div></div>
+            <div class="track-step"><div class="track-dot done">✓</div><div class="track-line done"></div><div class="track-lbl done">Packed</div></div>
+            <div class="track-step"><div class="track-dot active">📦</div><div class="track-line"></div><div class="track-lbl active">Shipped</div></div>
+            <div class="track-step"><div class="track-dot">📍</div><div class="track-lbl">Deliver</div></div>
+          </div>
+        </div>
+        <div class="oc-items">
+          <div class="oi"><div class="oi-thumb" style="background:linear-gradient(135deg,#0a1520,#0f2840)">⌚</div><div class="oi-name">Smart Fitness Band – AMOLED</div><div class="oi-qty">×1</div><div class="oi-price">2499</div></div>
+        </div>
+        <div class="oc-bot">
+          <div class="oc-total">2499</div>
+          <div class="oc-actions">
+            <div class="oa-btn">📞 Support</div>
+            <div class="oa-btn">🧾 Invoice</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="panel" id="panel-orders">
+      <div class="page-title">My Orders 📦</div>
+      <div class="page-sub">Track, return or review all your Paanitrendzz orders</div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="oa-btn" style="cursor:pointer;border-radius:20px;padding:8px 16px" onclick="filterOrd('all',this)">All Orders</button>
+        <button class="oa-btn" style="cursor:pointer;border-radius:20px;padding:8px 16px" onclick="filterOrd('delivered',this)">✅ Delivered</button>
+        <button class="oa-btn" style="cursor:pointer;border-radius:20px;padding:8px 16px" onclick="filterOrd('shipped',this)">🚚 Shipped</button>
+        <button class="oa-btn" style="cursor:pointer;border-radius:20px;padding:8px 16px" onclick="filterOrd('pending',this)">⏳ Pending</button>
+        <button class="oa-btn" style="cursor:pointer;border-radius:20px;padding:8px 16px" onclick="filterOrd('cancelled',this)">❌ Cancelled</button>
+      </div>
+      <div id="ordersListFull">
+        <!-- same order cards dynamically -->
+        <div class="order-card">
+          <div class="oc-top"><div><div class="oc-id">#PT-18471</div><div class="oc-date">11 March 2026</div></div><span class="badge bd">✅ Delivered</span></div>
+          <div class="oc-items"><div class="oi"><div class="oi-thumb oi-1">🕯️</div><div class="oi-name">Rose & Oud Luxury Soy Candle × 2</div><div class="oi-price">1398</div></div></div>
+          <div class="oc-bot"><div class="oc-total">2697</div><div class="oc-actions"><div class="oa-btn">⭐ Review</div><div class="oa-btn return">🔄 Return (15 Days)</div><div class="oa-btn">🧾 Invoice</div></div></div>
+        </div>
+        <div class="order-card">
+          <div class="oc-top"><div><div class="oc-id">#PT-18450</div><div class="oc-date">8 March 2026</div></div><span class="badge bs">🚚 Shipped</span></div>
+          <div class="oc-items"><div class="oi"><div class="oi-thumb" style="background:linear-gradient(135deg,#0a1520,#0f2840)">⌚</div><div class="oi-name">Smart Fitness Band – AMOLED × 1</div><div class="oi-price">2499</div></div></div>
+          <div class="oc-bot"><div class="oc-total">2499</div><div class="oc-actions"><div class="oa-btn">📞 Support</div><div class="oa-btn">🧾 Invoice</div></div></div>
+        </div>
+        <div class="order-card">
+          <div class="oc-top"><div><div class="oc-id">#PT-18420</div><div class="oc-date">2 March 2026</div></div><span class="badge bp">⏳ Pending</span></div>
+          <div class="oc-items"><div class="oi"><div class="oi-thumb oi-2">💡</div><div class="oi-name">RGB Smart LED Desk Lamp × 1</div><div class="oi-price">899</div></div></div>
+          <div class="oc-bot"><div class="oc-total">899</div><div class="oc-actions"><div class="oa-btn">📞 Support</div><div class="oa-btn return">Cancel Order</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WISHLIST -->
+    <div class="panel" id="panel-wishlist">
+      <div class="page-title">My Wishlist ❤️</div>
+      <div class="page-sub">Items you love — add to cart before they sell out!</div>
+      <div class="wish-grid">
+        <div class="wc">
+          <div class="wc-img wc-i1">🕯️<div class="wc-remove" onclick="this.closest('.wc').remove()">✕</div></div>
+          <div class="wc-info"><div class="wc-name">Jasmine & Sandalwood Gift Set</div>
+            <div class="wc-price"><span class="wc-now">1499</span><span class="wc-was">2499</span></div>
+            <button class="wc-btn" onclick="showToast('✅ Added to cart!')">Add to Cart 🛒</button></div>
+        </div>
+        <div class="wc">
+          <div class="wc-img wc-i2">🎧<div class="wc-remove" onclick="this.closest('.wc').remove()">✕</div></div>
+          <div class="wc-info"><div class="wc-name">Pro Wireless Earbuds – 40hr</div>
+            <div class="wc-price"><span class="wc-now">1299</span><span class="wc-was">2399</span></div>
+            <button class="wc-btn" onclick="showToast('✅ Added to cart!')">Add to Cart 🛒</button></div>
+        </div>
+        <div class="wc">
+          <div class="wc-img wc-i3">🔌<div class="wc-remove" onclick="this.closest('.wc').remove()">✕</div></div>
+          <div class="wc-info"><div class="wc-name">3-in-1 MagSafe Wireless Charger</div>
+            <div class="wc-price"><span class="wc-now">1899</span><span class="wc-was">4199</span></div>
+            <button class="wc-btn" onclick="showToast('✅ Added to cart!')">Add to Cart 🛒</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="panel" id="panel-profile">
+      <div class="page-title">My Profile 👤</div>
+      <div class="page-sub">Manage your personal information and preferences</div>
+      <div class="profile-grid">
+        <div class="profile-box">
+          <div class="avatar-section">
+            <div class="big-ava" id="bigAva">?</div>
+            <div class="ava-name" id="avaName">Your Name</div>
+            <div class="ava-since">Member since March 2026 🇮🇳</div>
+          </div>
+          <div class="form-row"><label>Full Name</label><input type="text" id="profName" placeholder="Your name"/></div>
+          <div class="form-row"><label>Mobile</label><input type="text" id="profMobile" placeholder="+91 9876543210"/></div>
+          <div class="form-row"><label>Email</label><input type="email" id="profEmail" placeholder="your@email.com"/></div>
+          <div class="form-row"><label>Date of Birth</label><input type="date"/></div>
+          <div class="form-row"><label>Gender</label>
+            <select><option>Prefer not to say</option><option>Male</option><option>Female</option><option>Other</option></select>
+          </div>
+          <button class="btn-save" onclick="saveProfile()">💾 Save Profile</button>
+        </div>
+        <div class="profile-box">
+          <h3>🔒 Change Password</h3>
+          <div class="form-row"><label>Current Password</label><input type="password" placeholder="Current password"/></div>
+          <div class="form-row"><label>New Password</label><input type="password" placeholder="New password"/></div>
+          <div class="form-row"><label>Confirm Password</label><input type="password" placeholder="Confirm new password"/></div>
+          <button class="btn-save" onclick="showToast('✅ Password updated!')">Update Password</button>
+          <div style="margin-top:24px">
+            <h3>🔔 Notifications</h3>
+            <div class="sett-item"><div class="sett-l"><strong>Order Updates</strong><span>SMS + WhatsApp</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="sett-item"><div class="sett-l"><strong>Offers & Deals</strong><span>Get exclusive deals</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="sett-item"><div class="sett-l"><strong>Email Newsletter</strong><span>Weekly trending picks</span></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADDRESSES -->
+    <div class="panel" id="panel-addresses">
+      <div class="page-title">My Addresses 📍</div>
+      <div class="page-sub">Manage delivery addresses for faster checkout</div>
+      <div class="addr-grid">
+        <div class="addr-card default">
+          <div class="addr-default">Default</div>
+          <div class="addr-name">🏠 Home</div>
+          <div class="addr-text">Flat 4B, Sunshine Apartments<br/>Banjara Hills, Hyderabad<br/>Telangana — 500034<br/>📞 8297744626</div>
+          <div class="addr-actions">
+            <div class="addr-btn">✏️ Edit</div>
+            <div class="addr-btn del">🗑️ Delete</div>
+          </div>
+        </div>
+        <div class="addr-card">
+          <div class="addr-name">🏢 Office</div>
+          <div class="addr-text">Plot 42, HITEC City<br/>Madhapur, Hyderabad<br/>Telangana — 500081<br/>📞 8297744626</div>
+          <div class="addr-actions">
+            <div class="addr-btn">✏️ Edit</div>
+            <div class="addr-btn">⭐ Set Default</div>
+            <div class="addr-btn del">🗑️ Delete</div>
+          </div>
+        </div>
+        <div class="add-addr" onclick="showToast('📍 Add address feature coming soon!')">
+          <div class="plus">+</div>
+          <span>Add New Address</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFER & EARN -->
+    <div class="panel" id="panel-refer">
+      <div class="page-title">Refer & Earn 🎁</div>
+      <div class="page-sub">Share Paanitrendzz with friends — both of you earn rewards!</div>
+      <div class="refer-box">
+        <h2>Earn ₹100 for Every Referral! 🎉</h2>
+        <p>Share your unique code with friends. When they place their first order,<br/>you get ₹100 cashback and they get 10% off! 🇮🇳</p>
+        <div class="refer-code">
+          <span id="referCode">PAANI-USER</span>
+          <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="copy-btn" style="background:var(--saff)" onclick="shareWA()">📲 Share on WhatsApp</button>
+          <button class="copy-btn" style="background:var(--card2);color:var(--white)" onclick="shareLink()">🔗 Copy Link</button>
+        </div>
+      </div>
+      <div class="refer-stats">
+        <div class="rs"><div class="rs-val" style="color:var(--saff)">3</div><div class="rs-lbl">Friends Referred</div></div>
+        <div class="rs"><div class="rs-val" style="color:var(--green)">₹300</div><div class="rs-lbl">Cashback Earned</div></div>
+        <div class="rs"><div class="rs-val" style="color:var(--teal)">₹100</div><div class="rs-lbl">Available Balance</div></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="page-title">Settings ⚙️</div>
+      <div class="page-sub">Control your account preferences</div>
+      <div class="profile-grid">
+        <div class="profile-box">
+          <h3>🛡️ Privacy</h3>
+          <div class="sett-item"><div class="sett-l"><strong>Profile Visibility</strong><span>Show your profile to others</span></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Order History</strong><span>Keep order history private</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Data Sharing</strong><span>Share usage data for better experience</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <h3 style="margin-top:20px">🌐 Language</h3>
+          <div class="form-row"><select><option>English</option><option>हिंदी</option><option>తెలుగు</option><option>தமிழ்</option></select></div>
+        </div>
+        <div class="profile-box">
+          <h3>⚠️ Danger Zone</h3>
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:16px;margin-bottom:14px">
+            <div style="font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:6px">Delete Account</div>
+            <div style="font-size:.78rem;color:var(--gray);margin-bottom:12px">This will permanently delete all your data, orders and preferences. This cannot be undone.</div>
+            <button style="background:var(--red);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;padding:9px 18px;border-radius:9px;border:none;cursor:pointer" onclick="showToast('Please contact support to delete account','err')">Delete My Account</button>
+          </div>
+          <div class="sett-item"><div class="sett-l"><strong>Two-Factor Auth</strong><span>Extra security via OTP</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── LOAD SESSION ──
+function loadSession(){
+  const sess=localStorage.getItem('pt_session');
+  if(!sess){window.location.href='login.html';return;}
+  const s=JSON.parse(sess);
+  if(s.role==='admin'){window.location.href='admin.html';return;}
+  // Set name
+  const initials=(s.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('userAva').textContent=initials;
+  document.getElementById('userName').textContent=s.name||'Customer';
+  document.getElementById('welcomeTitle').textContent='Welcome back, '+s.name+'! 👋';
+  document.getElementById('bigAva').textContent=initials;
+  document.getElementById('avaName').textContent=s.name||'';
+  document.getElementById('profName').value=s.name||'';
+  document.getElementById('profMobile').value=s.mobile?'+91 '+s.mobile:'';
+  document.getElementById('profEmail').value=s.email||'';
+  document.getElementById('referCode').textContent='PAANI-'+(s.name||'USER').split(' ')[0].toUpperCase().slice(0,6);
+}
+
+// ── PANEL NAVIGATION ──
+function showPanel(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.acc-nav-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el)el.classList.add('active');
+}
+
+// ── SAVE PROFILE ──
+function saveProfile(){
+  const sess=JSON.parse(localStorage.getItem('pt_session')||'{}');
+  sess.name=document.getElementById('profName').value;
+  localStorage.setItem('pt_session',JSON.stringify(sess));
+  showToast('✅ Profile saved!');
+  loadSession();
+}
+
+// ── LOGOUT ──
+function logout(){
+  localStorage.removeItem('pt_session');
+  window.location.href='login.html';
+}
+
+// ── REFER ──
+function copyCode(){
+  navigator.clipboard.writeText(document.getElementById('referCode').textContent);
+  showToast('📋 Referral code copied!');
+}
+function shareWA(){
+  const code=document.getElementById('referCode').textContent;
+  window.open('https://wa.me/?text=Hey! Use my referral code '+code+' on Paanitrendzz and get 10% off your first order! 🇮🇳🕯️ paanitrendzz.com');
+}
+function shareLink(){
+  navigator.clipboard.writeText('https://paanitrendzz.com?ref='+document.getElementById('referCode').textContent);
+  showToast('🔗 Referral link copied!');
+}
+
+// ── TOAST ──
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type==='err'?' err':'');
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── FILTER ORDERS ──
+function filterOrd(type,btn){
+  document.querySelectorAll('.oc-bot .oa-btn, button').forEach(b=>b.style&&(b.style.borderColor=''));
+  loadSession();
+}
+
+loadSession();
+</script>
+</body>
+</html>

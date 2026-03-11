@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paanitrendzz – Admin Console</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#080E1A;--navy2:#0D1B30;--navy3:#112240;
+  --teal:#00E5C8;--teal2:#00b8a0;--tealg:rgba(0,229,200,.13);
+  --saff:#FF9500;--saff2:#e07800;--saffg:rgba(255,149,0,.11);
+  --white:#F0F8FF;--gray:#7A8599;--card:#0F1E35;--card2:#162540;
+  --bdr:rgba(0,229,200,.12);--green:#22C55E;--red:#EF4444;--gold:#FFD700;
+  --purple:#8B5CF6;--sidebar:220px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;display:flex;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy2);
+  border-right:1px solid var(--bdr);display:flex;flex-direction:column;flex-shrink:0;
+  position:fixed;left:0;top:0;bottom:0;z-index:100}
+.sb-logo{padding:20px 20px 14px;border-bottom:1px solid var(--bdr)}
+.sb-logo .logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--white)}
+.sb-logo .logo span{color:var(--teal)}
+.sb-logo .sub{font-size:.68rem;color:var(--gray);margin-top:3px;font-family:'Syne',sans-serif;letter-spacing:.06em}
+.sb-nav{flex:1;padding:14px 12px;overflow-y:auto}
+.sb-section{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gray);
+  padding:8px 10px 6px;margin-top:10px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:500;
+  color:var(--gray);transition:all .2s;margin-bottom:2px;border:1px solid transparent}
+.sb-item:hover{background:var(--card);color:var(--white)}
+.sb-item.active{background:var(--tealg);border-color:var(--bdr);color:var(--teal)}
+.sb-item .icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sb-item .badge{margin-left:auto;background:var(--red);color:#fff;font-size:.6rem;
+  font-weight:800;padding:2px 7px;border-radius:10px;font-family:'Syne',sans-serif}
+.sb-item .badge.g{background:var(--green);color:var(--navy)}
+.sb-item .badge.y{background:var(--saff);color:var(--navy)}
+.sb-footer{padding:14px;border-top:1px solid var(--bdr)}
+.sb-user{display:flex;align-items:center;gap:10px}
+.sb-ava{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;color:var(--navy);flex-shrink:0}
+.sb-uname{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700}
+.sb-urole{font-size:.65rem;color:var(--green)}
+.view-store{display:flex;align-items:center;gap:6px;margin-top:10px;padding:8px 12px;
+  background:var(--saffg);border:1px solid rgba(255,149,0,.22);border-radius:9px;
+  color:var(--saff);font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;
+  cursor:pointer;transition:all .2s}
+.view-store:hover{background:rgba(255,149,0,.2)}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:100vh}
+.topbar{padding:0 28px;height:60px;background:rgba(8,14,26,.98);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:90}
+.topbar h1{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
+.topbar-r{display:flex;align-items:center;gap:12px}
+.tb-date{font-size:.76rem;color:var(--gray)}
+.notif{width:36px;height:36px;border-radius:9px;background:var(--card2);border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;position:relative}
+.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.content{flex:1;overflow-y:auto;padding:24px 28px}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px;
+  position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.stat:hover{transform:translateY(-2px);border-color:rgba(0,229,200,.25)}
+.stat::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;
+  border-radius:50%;opacity:.08}
+.stat.teal::before{background:var(--teal)}
+.stat.saff::before{background:var(--saff)}
+.stat.green::before{background:var(--green)}
+.stat.red::before{background:var(--red)}
+.stat.purple::before{background:var(--purple)}
+.stat-icon{font-size:1.6rem;margin-bottom:12px;display:block}
+.stat-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:4px}
+.stat-val.teal{color:var(--teal)}.stat-val.saff{color:var(--saff)}
+.stat-val.green{color:var(--green)}.stat-val.red{color:var(--red)}
+.stat-val.purple{color:var(--purple)}
+.stat-lbl{font-size:.78rem;color:var(--gray);font-weight:500}
+.stat-chg{font-size:.72rem;margin-top:8px;font-weight:600;font-family:'Syne',sans-serif}
+.stat-chg.up{color:var(--green)}.stat-chg.dn{color:var(--red)}
+
+/* BIG STATS ROW */
+.stats2{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+.s2{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px;text-align:center}
+.s2-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.s2-lbl{font-size:.72rem;color:var(--gray)}
+
+/* CHARTS AREA */
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:24px}
+.chart-box{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px}
+.chart-box h3{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px}
+.chart-box h3 .sub{font-size:.72rem;color:var(--gray);font-weight:400;margin-left:auto}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px}
+.bar{flex:1;border-radius:6px 6px 0 0;background:var(--tealg);border:1px solid var(--bdr);
+  position:relative;transition:background .2s;cursor:pointer;min-width:0}
+.bar:hover{background:rgba(0,229,200,.25)}
+.bar.active{background:var(--tealg);border-color:var(--teal)}
+.bar-lbl{font-size:.6rem;color:var(--gray);text-align:center;margin-top:5px;font-family:'Syne',sans-serif;font-weight:600}
+.pie-wrap{display:flex;flex-direction:column;gap:10px}
+.pie-item{display:flex;align-items:center;gap:10px}
+.pie-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-bar{flex:1;height:6px;background:var(--navy2);border-radius:3px;overflow:hidden}
+.pie-fill{height:100%;border-radius:3px}
+.pie-pct{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;min-width:30px;text-align:right}
+.pie-lbl{font-size:.74rem;color:var(--gray);min-width:80px}
+
+/* TABLE */
+.tbl-wrap{background:var(--card);border:1px solid var(--bdr);border-radius:16px;overflow:hidden;margin-bottom:20px}
+.tbl-head{padding:16px 20px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.tbl-head h3{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700}
+.tbl-actions{display:flex;align-items:center;gap:10px}
+.tbl-srch{display:flex;align-items:center;background:var(--card2);border:1px solid var(--bdr);
+  border-radius:9px;padding:6px 12px;gap:7px}
+.tbl-srch input{background:none;border:none;outline:none;color:var(--white);font-size:.78rem;width:150px}
+.tbl-srch input::placeholder{color:var(--gray)}
+.btn-sm{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;padding:7px 14px;border-radius:8px;
+  border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-teal{background:var(--teal);color:var(--navy)}
+.btn-teal:hover{background:var(--teal2)}
+.btn-saff{background:var(--saff);color:#fff}
+.btn-saff:hover{background:var(--saff2)}
+.btn-outline{background:transparent;color:var(--teal);border:1px solid var(--bdr)}
+.btn-outline:hover{background:var(--tealg)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--navy2)}
+th{padding:11px 16px;text-align:left;font-family:'Syne',sans-serif;font-size:.72rem;
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);
+  border-bottom:1px solid var(--bdr)}
+td{padding:12px 16px;font-size:.82rem;border-bottom:1px solid rgba(0,229,200,.06)}
+tr:hover td{background:rgba(0,229,200,.03)}
+tr:last-child td{border-bottom:none}
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:'Syne',sans-serif;
+  font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em}
+.badge.delivered{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.badge.pending{background:rgba(255,149,0,.15);color:var(--saff);border:1px solid rgba(255,149,0,.25)}
+.badge.cancelled{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.badge.shipped{background:rgba(0,229,200,.15);color:var(--teal);border:1px solid var(--bdr)}
+.badge.processing{background:rgba(139,92,246,.15);color:var(--purple);border:1px solid rgba(139,92,246,.25)}
+.badge.cod{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge.upi{background:rgba(255,149,0,.1);color:var(--saff);border:1px solid rgba(255,149,0,.2)}
+.td-actions{display:flex;align-items:center;gap:6px}
+.act-btn{background:var(--card2);border:1px solid var(--bdr);border-radius:6px;
+  padding:5px 10px;font-size:.7rem;cursor:pointer;color:var(--gray);
+  font-family:'Syne',sans-serif;font-weight:700;transition:all .2s}
+.act-btn:hover{border-color:var(--teal);color:var(--teal)}
+.act-btn.red:hover{border-color:var(--red);color:var(--red)}
+.prod-thumb{display:flex;align-items:center;gap:10px}
+.pt-img{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;flex-shrink:0}
+.pt-name{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700}
+.pt-cat{font-size:.68rem;color:var(--gray)}
+.stock-bar{width:60px;height:5px;background:var(--navy2);border-radius:3px;overflow:hidden;margin-top:4px}
+.stock-fill{height:100%;border-radius:3px}
+.price-inr::before{content:'₹';font-size:.8em}
+.price-inr{font-family:'Syne',sans-serif;font-weight:700}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
+  display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--navy2);border:1px solid var(--bdr);border-radius:20px;
+  padding:28px;width:500px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:20px}
+.form-row{margin-bottom:14px}
+.form-row label{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:6px}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;background:var(--card);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.85rem;
+  outline:none;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--teal)}
+.form-row select option{background:var(--navy2)}
+.form-row textarea{resize:vertical;min-height:80px}
+.form-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-btns{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+
+/* INVOICE */
+.inv{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:24px;margin-bottom:16px}
+.inv-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:14px}
+.inv-brand .logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+.inv-brand .logo span{color:var(--teal)}
+.inv-brand p{font-size:.76rem;color:var(--gray);margin-top:6px;line-height:1.6}
+.inv-details h3{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;color:var(--saff);margin-bottom:8px}
+.inv-details p{font-size:.76rem;color:var(--gray);margin-bottom:4px}
+.inv-details strong{color:var(--white)}
+.inv-table table{width:100%}
+.inv-table th{background:var(--navy2)}
+.inv-total{text-align:right;margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr)}
+.inv-total .row{display:flex;justify-content:flex-end;gap:20px;font-size:.82rem;margin-bottom:5px}
+.inv-total .row span{min-width:80px;text-align:right}
+.inv-total .row.final{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--teal)}
+
+/* PAYMENT GATEWAY */
+.pg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.pg-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px;
+  transition:border-color .3s,transform .2s}
+.pg-card.active-gw{border-color:var(--teal)}
+.pg-card:hover{transform:translateY(-2px)}
+.pg-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pg-icon{font-size:2rem}
+.toggle{width:42px;height:24px;border-radius:12px;background:var(--navy2);
+  border:1px solid var(--bdr);position:relative;cursor:pointer;transition:background .2s}
+.toggle.on{background:var(--teal)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:transform .2s}
+.toggle.on::after{transform:translateX(18px)}
+.pg-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:6px}
+.pg-desc{font-size:.76rem;color:var(--gray);line-height:1.5}
+.pg-fees{font-size:.72rem;color:var(--teal);margin-top:8px;font-family:'Syne',sans-serif;font-weight:600}
+
+/* CUSTOMIZATION */
+.cust-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cust-box{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px}
+.cust-box h3{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px}
+.color-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.color-swatch{width:32px;height:32px;border-radius:8px;border:2px solid transparent;cursor:pointer;transition:border-color .2s}
+.color-swatch.active{border-color:var(--white)}
+.color-lbl{font-size:.8rem;color:var(--gray)}
+.preview-store{width:100%;aspect-ratio:16/9;background:var(--navy);border:1px solid var(--bdr);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:.85rem;color:var(--gray);flex-direction:column;gap:6px}
+.slider-row{margin-bottom:14px}
+.slider-row label{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;
+  color:var(--gray);display:flex;justify-content:space-between;margin-bottom:7px}
+.slider-row label span{color:var(--teal)}
+input[type="range"]{width:100%;accent-color:var(--teal)}
+
+/* SETTINGS */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.sett-box{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px}
+.sett-box h3{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:16px;
+  padding-bottom:12px;border-bottom:1px solid var(--bdr)}
+.sett-item{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid rgba(0,229,200,.06)}
+.sett-item:last-child{border-bottom:none}
+.sett-l strong{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:600;display:block}
+.sett-l span{font-size:.72rem;color:var(--gray)}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{background:var(--navy2);border:1px solid var(--bdr);border-radius:6px;
+  padding:4px 10px;font-size:.72rem;font-family:'Syne',sans-serif;font-weight:600;color:var(--gray)}
+.tag.active{border-color:var(--teal);color:var(--teal);background:var(--tealg)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--navy2)}
+::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,229,200,.3)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{width:60px}
+  .sb-logo,.sb-section,.sb-item span:not(.icon),.sb-user .sb-uname,.sb-user .sb-urole,.view-store span{display:none}
+  .main{margin-left:60px}
+  .stat-grid,.stats2{grid-template-columns:1fr 1fr}
+  .chart-row,.cust-grid,.settings-grid,.pg-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo">Paani<span>trendzz</span></div>
+    <div class="sub">ADMIN CONSOLE</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Main</div>
+    <div class="sb-item active" onclick="showPanel('dashboard',this)"><span class="icon">📊</span><span>Dashboard</span></div>
+    <div class="sb-item" onclick="showPanel('orders',this)"><span class="icon">📦</span><span>Orders</span><span class="badge">14</span></div>
+    <div class="sb-item" onclick="showPanel('products',this)"><span class="icon">🏪</span><span>Products</span></div>
+    <div class="sb-item" onclick="showPanel('invoices',this)"><span class="icon">🧾</span><span>Invoices</span></div>
+    <div class="sb-section">Finance</div>
+    <div class="sb-item" onclick="showPanel('payments',this)"><span class="icon">💳</span><span>Payments</span><span class="badge g">₹</span></div>
+    <div class="sb-item" onclick="showPanel('gateway',this)"><span class="icon">🔐</span><span>Payment Gateway</span></div>
+    <div class="sb-section">Store</div>
+    <div class="sb-item" onclick="showPanel('customers',this)"><span class="icon">👥</span><span>Customers</span></div>
+    <div class="sb-item" onclick="showPanel('reviews',this)"><span class="icon">⭐</span><span>Reviews</span><span class="badge y">3</span></div>
+    <div class="sb-item" onclick="showPanel('customize',this)"><span class="icon">🎨</span><span>Customization</span></div>
+    <div class="sb-section">Config</div>
+    <div class="sb-item" onclick="showPanel('settings',this)"><span class="icon">⚙️</span><span>Settings</span></div>
+    <div class="sb-item" onclick="showPanel('shipping',this)"><span class="icon">🚚</span><span>Shipping & COD</span></div>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-ava">A</div>
+      <div><div class="sb-uname">Admin</div><div class="sb-urole">● Online</div></div>
+    </div>
+    <div class="view-store" onclick="window.open('index.html','_blank')">
+      <span>🌐</span><span>View Store</span>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <h1 id="pageTitle">📊 Dashboard</h1>
+    <div class="topbar-r">
+      <span class="tb-date" id="dateNow"></span>
+      <div class="notif">🔔<div class="notif-dot"></div></div>
+      <button class="btn-sm btn-teal" onclick="showPanel('products',document.querySelector('.sb-item:nth-child(7))'))">+ Add Product</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stat-grid">
+        <div class="stat teal">
+          <span class="stat-icon">💰</span>
+          <div class="stat-val teal">₹2,84,750</div>
+          <div class="stat-lbl">Total Revenue</div>
+          <div class="stat-chg up">↑ 23.4% this month</div>
+        </div>
+        <div class="stat saff">
+          <span class="stat-icon">📦</span>
+          <div class="stat-val saff">1,847</div>
+          <div class="stat-lbl">Total Orders</div>
+          <div class="stat-chg up">↑ 18.2% this month</div>
+        </div>
+        <div class="stat green">
+          <span class="stat-icon">✅</span>
+          <div class="stat-val green">1,542</div>
+          <div class="stat-lbl">Delivered</div>
+          <div class="stat-chg up">↑ 12.1% this month</div>
+        </div>
+        <div class="stat red">
+          <span class="stat-icon">❌</span>
+          <div class="stat-val red">87</div>
+          <div class="stat-lbl">Cancelled</div>
+          <div class="stat-chg dn">↑ 2.3% this month</div>
+        </div>
+      </div>
+      <div class="stats2">
+        <div class="s2"><div class="s2-val" style="color:var(--saff)">218</div><div class="s2-lbl">⏳ Pending</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--purple)">156</div><div class="s2-lbl">🚚 Shipped</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--teal)">₹154</div><div class="s2-lbl">💵 Avg Order Value</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--green)">50,241</div><div class="s2-lbl">👥 Total Customers</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--gold)">4.8⭐</div><div class="s2-lbl">⭐ Avg Rating</div></div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-box">
+          <h3>📈 Revenue — Last 7 Days <span class="sub">Total ₹2,84,750</span></h3>
+          <div class="bar-chart" id="revenueChart"></div>
+          <div id="revenueLabels" style="display:flex;gap:8px;margin-top:4px"></div>
+        </div>
+        <div class="chart-box">
+          <h3>🏷️ Revenue by Category</h3>
+          <div class="pie-wrap">
+            <div class="pie-item"><span class="pie-dot" style="background:var(--saff)"></span><span class="pie-lbl">🕯️ Candles</span><div class="pie-bar"><div class="pie-fill" style="width:48%;background:var(--saff)"></div></div><span class="pie-pct" style="color:var(--saff)">48%</span></div>
+            <div class="pie-item"><span class="pie-dot" style="background:var(--teal)"></span><span class="pie-lbl">📱 Gadgets</span><div class="pie-bar"><div class="pie-fill" style="width:35%;background:var(--teal)"></div></div><span class="pie-pct" style="color:var(--teal)">35%</span></div>
+            <div class="pie-item"><span class="pie-dot" style="background:var(--purple)"></span><span class="pie-lbl">🏠 Home</span><div class="pie-bar"><div class="pie-fill" style="width:17%;background:var(--purple)"></div></div><span class="pie-pct" style="color:var(--purple)">17%</span></div>
+          </div>
+          <div style="margin-top:16px">
+            <h3 style="font-size:.86rem;margin-bottom:10px">💳 Payment Methods</h3>
+            <div class="pie-wrap">
+              <div class="pie-item"><span class="pie-dot" style="background:var(--saff)"></span><span class="pie-lbl">📲 UPI</span><div class="pie-bar"><div class="pie-fill" style="width:52%;background:var(--saff)"></div></div><span class="pie-pct" style="color:var(--saff)">52%</span></div>
+              <div class="pie-item"><span class="pie-dot" style="background:var(--green)"></span><span class="pie-lbl">💵 COD</span><div class="pie-bar"><div class="pie-fill" style="width:31%;background:var(--green)"></div></div><span class="pie-pct" style="color:var(--green)">31%</span></div>
+              <div class="pie-item"><span class="pie-dot" style="background:var(--teal)"></span><span class="pie-lbl">💳 Cards</span><div class="pie-bar"><div class="pie-fill" style="width:17%;background:var(--teal)"></div></div><span class="pie-pct" style="color:var(--teal)">17%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><h3>🔴 Recent Orders</h3><button class="btn-sm btn-outline" onclick="showPanel('orders',null)">View All →</button></div>
+        <table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="recentOrders"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="panel" id="panel-orders">
+      <div class="stats2" style="margin-bottom:20px">
+        <div class="s2"><div class="s2-val" style="color:var(--saff)">1,847</div><div class="s2-lbl">📦 Total Orders</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--saff)">218</div><div class="s2-lbl">⏳ Pending</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--purple)">156</div><div class="s2-lbl">🚚 Shipped</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--green)">1,542</div><div class="s2-lbl">✅ Delivered</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--red)">87</div><div class="s2-lbl">❌ Cancelled</div></div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head">
+          <h3>📦 All Orders</h3>
+          <div class="tbl-actions">
+            <div class="tbl-srch"><span style="color:var(--gray)">🔍</span><input type="text" placeholder="Search orders…" oninput="filterOrders(this.value)"/></div>
+            <select class="btn-sm btn-outline" style="cursor:pointer" onchange="filterByStatus(this.value)">
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <button class="btn-sm btn-teal" onclick="exportCSV()">⬇️ Export</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Location</th><th>Product</th><th>Qty</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="panel" id="panel-products">
+      <div class="tbl-wrap">
+        <div class="tbl-head">
+          <h3>🏪 Product Listings</h3>
+          <div class="tbl-actions">
+            <div class="tbl-srch"><span style="color:var(--gray)">🔍</span><input type="text" placeholder="Search products…"/></div>
+            <button class="btn-sm btn-teal" onclick="openModal('addProduct')">+ Add Product</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>MRP</th><th>Stock</th><th>Sales</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- INVOICES -->
+    <div class="panel" id="panel-invoices">
+      <div class="tbl-wrap" style="margin-bottom:20px">
+        <div class="tbl-head">
+          <h3>🧾 All Invoices</h3>
+          <div class="tbl-actions">
+            <button class="btn-sm btn-outline" onclick="showInvoice('INV-2026-001')">View Sample Invoice</button>
+            <button class="btn-sm btn-teal" onclick="openModal('newInvoice')">+ New Invoice</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Invoice #</th><th>Customer</th><th>Order ID</th><th>Amount</th><th>GST (18%)</th><th>Total</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="invoicesTable"></tbody>
+        </table>
+      </div>
+      <div id="invoicePreview" style="display:none">
+        <div class="inv">
+          <div class="inv-head">
+            <div class="inv-brand">
+              <div class="logo">Paani<span>trendzz</span> 🇮🇳</div>
+              <p>📍 Hyderabad, Telangana<br/>📞 8297744626 · admin@paanitrendzz.com<br/>GSTIN: 36XXXXXXXXXXXXX</p>
+            </div>
+            <div class="inv-details">
+              <h3>TAX INVOICE</h3>
+              <p>Invoice #: <strong>INV-2026-001</strong></p>
+              <p>Date: <strong>11 March 2026</strong></p>
+              <p>Order ID: <strong>#PT-18471</strong></p>
+              <p>Payment: <strong>UPI (GPay)</strong></p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
+            <div><p style="font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Bill To:</p>
+              <p style="font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700">Sneha Kapoor</p>
+              <p style="font-size:.78rem;color:var(--gray)">Mumbai, Maharashtra 400001</p></div>
+          </div>
+          <div class="inv-table">
+            <table>
+              <thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Unit Price</th><th>GST</th><th>Total</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Rose & Oud Luxury Soy Candle</td><td>2</td><td class="price-inr">699</td><td>18%</td><td class="price-inr">1,648</td></tr>
+                <tr><td>2</td><td>Lavender Calm Candle – 200g</td><td>1</td><td class="price-inr">549</td><td>18%</td><td class="price-inr">648</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="inv-total">
+            <div class="row"><span>Subtotal:</span><span class="price-inr">2,100</span></div>
+            <div class="row"><span>GST (18%):</span><span class="price-inr">378</span></div>
+            <div class="row"><span>Shipping:</span><span style="color:var(--green)">FREE</span></div>
+            <div class="row final"><span>TOTAL:</span><span class="price-inr">2,478</span></div>
+          </div>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--bdr);font-size:.74rem;color:var(--gray)">
+            Thank you for shopping with Paanitrendzz! · 15-Day Easy Returns · admin@paanitrendzz.com
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn-sm btn-teal" onclick="window.print()">🖨️ Print Invoice</button>
+          <button class="btn-sm btn-outline" onclick="document.getElementById('invoicePreview').style.display='none'">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="panel" id="panel-payments">
+      <div class="stat-grid">
+        <div class="stat teal"><span class="stat-icon">💰</span><div class="stat-val teal">₹2,84,750</div><div class="stat-lbl">Total Collected</div></div>
+        <div class="stat green"><span class="stat-icon">📲</span><div class="stat-val green">₹1,47,900</div><div class="stat-lbl">UPI Payments</div></div>
+        <div class="stat saff"><span class="stat-icon">💵</span><div class="stat-val saff">₹88,200</div><div class="stat-lbl">COD Collected</div></div>
+        <div class="stat purple"><span class="stat-icon">💳</span><div class="stat-val purple">₹48,650</div><div class="stat-lbl">Card Payments</div></div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><h3>💳 Payment Transactions</h3>
+          <div class="tbl-actions">
+            <button class="btn-sm btn-outline">⬇️ Export Report</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Txn ID</th><th>Customer</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody id="paymentsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- GATEWAY -->
+    <div class="panel" id="panel-gateway">
+      <div style="margin-bottom:20px">
+        <div style="font-family:'Syne',sans-serif;font-size:.8rem;color:var(--gray);margin-bottom:16px">Configure your payment gateways. Toggle to enable/disable each method.</div>
+      </div>
+      <div class="pg-grid">
+        <div class="pg-card active-gw">
+          <div class="pg-top"><span class="pg-icon">📲</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">UPI / QR Payments</div>
+          <div class="pg-desc">GPay, PhonePe, Paytm, BHIM & all UPI apps. Instant settlement.</div>
+          <div class="pg-fees">✅ Active · Fee: 0% (UPI)</div>
+        </div>
+        <div class="pg-card active-gw">
+          <div class="pg-top"><span class="pg-icon">💵</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">Cash on Delivery</div>
+          <div class="pg-desc">Collect cash at doorstep. Available pan-India. Builds customer trust.</div>
+          <div class="pg-fees">✅ Active · COD charge: ₹49 per order</div>
+        </div>
+        <div class="pg-card active-gw">
+          <div class="pg-top"><span class="pg-icon">🔐</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">Razorpay</div>
+          <div class="pg-desc">Cards, net banking, EMI, UPI. India's leading payment gateway.</div>
+          <div class="pg-fees">✅ Active · Fee: 2% + GST per txn</div>
+        </div>
+        <div class="pg-card">
+          <div class="pg-top"><span class="pg-icon">💳</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">Stripe (International)</div>
+          <div class="pg-desc">Accept international cards. Useful for NRI customers & exports.</div>
+          <div class="pg-fees">⚪ Inactive · Fee: 2.9% + $0.30</div>
+        </div>
+        <div class="pg-card">
+          <div class="pg-top"><span class="pg-icon">🏦</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">Net Banking</div>
+          <div class="pg-desc">Direct bank transfer via 50+ Indian banks. Secure & trusted.</div>
+          <div class="pg-fees">✅ Active · Fee: 1.5% + GST</div>
+        </div>
+        <div class="pg-card">
+          <div class="pg-top"><span class="pg-icon">📊</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="pg-name">EMI (No-Cost)</div>
+          <div class="pg-desc">3/6/12 month EMI via HDFC, ICICI, SBI, Axis & more.</div>
+          <div class="pg-fees">✅ Active · Min order: ₹3,000</div>
+        </div>
+      </div>
+      <div class="sett-box">
+        <h3>🔑 Razorpay API Configuration</h3>
+        <div class="form-2">
+          <div class="form-row"><label>API Key ID</label><input type="password" value="rzp_live_XXXXXXXXXX" placeholder="rzp_live_..."/></div>
+          <div class="form-row"><label>API Key Secret</label><input type="password" value="••••••••••••••••" placeholder="Secret key…"/></div>
+          <div class="form-row"><label>Webhook URL</label><input type="text" value="https://paanitrendzz.com/webhook/razorpay"/></div>
+          <div class="form-row"><label>Mode</label><select><option>Live</option><option>Test</option></select></div>
+        </div>
+        <div style="margin-top:14px"><button class="btn-sm btn-teal">Save Configuration</button></div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div class="panel" id="panel-customers">
+      <div class="stats2">
+        <div class="s2"><div class="s2-val" style="color:var(--green)">50,241</div><div class="s2-lbl">👥 Total Customers</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--teal)">3,842</div><div class="s2-lbl">🔄 Repeat Buyers</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--saff)">1,241</div><div class="s2-lbl">🆕 New This Month</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--purple)">₹154</div><div class="s2-lbl">💰 Avg LTV</div></div>
+        <div class="s2"><div class="s2-val" style="color:var(--gold)">78%</div><div class="s2-lbl">📲 From Mobile</div></div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><h3>👥 Customer List</h3>
+          <div class="tbl-actions"><div class="tbl-srch"><span style="color:var(--gray)">🔍</span><input type="text" placeholder="Search customers…"/></div></div>
+        </div>
+        <table>
+          <thead><tr><th>Customer</th><th>Location</th><th>Orders</th><th>Total Spent</th><th>Last Order</th><th>Status</th></tr></thead>
+          <tbody id="customersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="panel" id="panel-reviews">
+      <div class="tbl-wrap">
+        <div class="tbl-head"><h3>⭐ Customer Reviews</h3></div>
+        <table>
+          <thead><tr><th>Customer</th><th>Product</th><th>Rating</th><th>Review</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Sneha K., Mumbai</td><td>Rose & Oud Candle</td><td style="color:var(--gold)">★★★★★</td><td style="max-width:200px;font-size:.78rem">"Candle quality is outstanding! Pure soy wax smell amazing"</td><td>10 Mar 2026</td><td><span class="badge delivered">Published</span></td><td><div class="td-actions"><div class="act-btn">Edit</div><div class="act-btn red">Hide</div></div></td></tr>
+            <tr><td>Rahul M., Hyderabad</td><td>Pro Earbuds</td><td style="color:var(--gold)">★★★★★</td><td style="max-width:200px;font-size:.78rem">"Best budget earbuds! ₹1299 mein amazing sound quality"</td><td>09 Mar 2026</td><td><span class="badge shipped">Pending</span></td><td><div class="td-actions"><div class="act-btn btn-teal">Approve</div><div class="act-btn red">Reject</div></div></td></tr>
+            <tr><td>Priya S., Jaipur</td><td>Jasmine Gift Set</td><td style="color:var(--gold)">★★★★★</td><td style="max-width:200px;font-size:.78rem">"Packaging so premium! Mom loved it as Diwali gift"</td><td>08 Mar 2026</td><td><span class="badge shipped">Pending</span></td><td><div class="td-actions"><div class="act-btn btn-teal">Approve</div><div class="act-btn red">Reject</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CUSTOMIZE -->
+    <div class="panel" id="panel-customize">
+      <div class="cust-grid">
+        <div class="cust-box">
+          <h3>🎨 Brand Colors</h3>
+          <div class="form-row"><label>Primary Color (Teal)</label>
+            <div class="color-row">
+              <div class="color-swatch active" style="background:#00E5C8" onclick="setColor(this,'#00E5C8')"></div>
+              <div class="color-swatch" style="background:#00BCD4" onclick="setColor(this,'#00BCD4')"></div>
+              <div class="color-swatch" style="background:#26C6DA" onclick="setColor(this,'#26C6DA')"></div>
+              <div class="color-swatch" style="background:#4DB6AC" onclick="setColor(this,'#4DB6AC')"></div>
+              <span class="color-lbl">Main brand color</span>
+            </div>
+          </div>
+          <div class="form-row"><label>Accent Color (Saffron)</label>
+            <div class="color-row">
+              <div class="color-swatch active" style="background:#FF9500" onclick="setColor(this,'#FF9500')"></div>
+              <div class="color-swatch" style="background:#FF6D00" onclick="setColor(this,'#FF6D00')"></div>
+              <div class="color-swatch" style="background:#FF3D00" onclick="setColor(this,'#FF3D00')"></div>
+              <div class="color-swatch" style="background:#FFC400" onclick="setColor(this,'#FFC400')"></div>
+              <span class="color-lbl">Indian accent color</span>
+            </div>
+          </div>
+          <h3 style="margin-top:16px">📝 Announcement Bar</h3>
+          <div class="form-row"><label>Announcement Text</label>
+            <input type="text" value="🇮🇳 FREE Delivery above ₹499 | 🕯️ Candles — Limited Stock | Code PAANI10 = 10% OFF"/></div>
+          <h3 style="margin-top:16px">🛍️ Homepage Banner</h3>
+          <div class="form-row"><label>Hero Headline</label><input type="text" value="The Pulse of Every Trend. India's Own."/></div>
+          <div class="form-row"><label>Sub Headline (Hindi)</label><input type="text" value="Desh ka sabse trendy store — aapka apna! 🇮🇳"/></div>
+          <div class="form-row"><label>CTA Button Text</label><input type="text" value="🕯️ Shop Candles"/></div>
+          <button class="btn-sm btn-teal" style="margin-top:6px">💾 Save Changes</button>
+        </div>
+        <div class="cust-box">
+          <h3>⚙️ Store Settings</h3>
+          <div class="slider-row"><label>Product Cards Per Row <span id="colVal">4</span></label>
+            <input type="range" min="2" max="5" value="4" oninput="document.getElementById('colVal').textContent=this.value"/></div>
+          <div class="slider-row"><label>Homepage Products Shown <span id="prodVal">8</span></label>
+            <input type="range" min="4" max="20" value="8" oninput="document.getElementById('prodVal').textContent=this.value"/></div>
+          <h3 style="margin-top:16px">🏷️ Active Badges</h3>
+          <div class="tag-wrap">
+            <span class="tag active">BESTSELLER 🔥</span>
+            <span class="tag active">COD Available</span>
+            <span class="tag active">-45% Sale</span>
+            <span class="tag">NEW</span>
+            <span class="tag active">LIMITED</span>
+            <span class="tag">HOT</span>
+          </div>
+          <h3 style="margin-top:16px">📦 Return Policy Display</h3>
+          <div class="form-row"><label>Return Window</label>
+            <select><option>15 Days</option><option>7 Days</option><option>30 Days</option></select>
+          </div>
+          <div class="form-row"><label>Free Delivery Threshold</label>
+            <input type="number" value="499" placeholder="₹ Amount"/></div>
+          <h3 style="margin-top:16px">🖥️ Store Preview</h3>
+          <div class="preview-store"><span style="font-size:2rem">🌐</span><span>Live preview in store →</span></div>
+          <button class="btn-sm btn-outline" onclick="window.open('index.html','_blank')" style="margin-top:10px;width:100%">Open Store Preview</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="settings-grid">
+        <div class="sett-box">
+          <h3>🏪 Store Details</h3>
+          <div class="form-row"><label>Store Name</label><input type="text" value="Paanitrendzz"/></div>
+          <div class="form-row"><label>Tagline</label><input type="text" value="India Ka Trending Store 🇮🇳"/></div>
+          <div class="form-row"><label>Contact Number</label><input type="text" value="8297744626"/></div>
+          <div class="form-row"><label>Email</label><input type="email" value="admin@paanitrendzz.com"/></div>
+          <div class="form-row"><label>Address</label><textarea>Hyderabad, Telangana, India</textarea></div>
+          <div class="form-row"><label>GSTIN</label><input type="text" value="36XXXXXXXXXXXXX"/></div>
+          <button class="btn-sm btn-teal">💾 Save</button>
+        </div>
+        <div class="sett-box">
+          <h3>🔔 Notifications</h3>
+          <div class="sett-item"><div class="sett-l"><strong>New Order Alert</strong><span>Email + WhatsApp on every order</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>COD Reminder</strong><span>Notify when COD order placed</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Low Stock Alert</strong><span>Alert when stock below 10 units</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Review Alerts</strong><span>Notify on new review submission</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Daily Report</strong><span>Daily sales summary at 9am</span></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+        <div class="sett-box">
+          <h3>🛡️ Security</h3>
+          <div class="form-row"><label>Admin Password</label><input type="password" value="••••••••"/></div>
+          <div class="form-row"><label>WhatsApp for OTP</label><input type="text" value="8297744626"/></div>
+          <div class="sett-item"><div class="sett-l"><strong>Two-Factor Auth</strong><span>OTP on every login</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <button class="btn-sm btn-saff" style="margin-top:14px">Update Security</button>
+        </div>
+        <div class="sett-box">
+          <h3>📱 Social Media</h3>
+          <div class="form-row"><label>Instagram</label><input type="text" value="@paanitrendzz"/></div>
+          <div class="form-row"><label>YouTube</label><input type="text" value="@paanitrendzz"/></div>
+          <div class="form-row"><label>WhatsApp Business</label><input type="text" value="8297744626"/></div>
+          <div class="form-row"><label>Facebook Page</label><input type="text" value="fb.com/paanitrendzz"/></div>
+          <button class="btn-sm btn-teal">💾 Save Links</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHIPPING -->
+    <div class="panel" id="panel-shipping">
+      <div class="cust-grid">
+        <div class="cust-box">
+          <h3>🚚 Shipping Configuration</h3>
+          <div class="form-row"><label>Free Delivery Threshold (₹)</label><input type="number" value="499"/></div>
+          <div class="form-row"><label>Standard Delivery Charge (₹)</label><input type="number" value="49"/></div>
+          <div class="form-row"><label>Express Delivery Charge (₹)</label><input type="number" value="99"/></div>
+          <div class="form-row"><label>COD Extra Charge (₹)</label><input type="number" value="49"/></div>
+          <div class="form-row"><label>Estimated Delivery (Standard)</label><input type="text" value="3-7 Business Days"/></div>
+          <div class="form-row"><label>Estimated Delivery (Express)</label><input type="text" value="1-2 Business Days"/></div>
+          <button class="btn-sm btn-teal">💾 Save Shipping</button>
+        </div>
+        <div class="cust-box">
+          <h3>🔄 Return Policy</h3>
+          <div class="form-row"><label>Return Window</label>
+            <select><option selected>15 Days</option><option>7 Days</option><option>30 Days</option></select>
+          </div>
+          <div class="form-row"><label>Return Conditions</label><textarea>Product must be unused, in original packaging. Candles must be unused. Electronics must be in original condition.</textarea></div>
+          <div class="sett-item"><div class="sett-l"><strong>Free Return Pickup</strong><span>We arrange pickup at no cost</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="sett-item"><div class="sett-l"><strong>Refund to Source</strong><span>Refund within 5-7 business days</span></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="form-row" style="margin-top:14px"><label>Courier Partner</label>
+            <select><option>Shiprocket</option><option>Delhivery</option><option>Blue Dart</option><option>DTDC</option></select>
+          </div>
+          <button class="btn-sm btn-teal">💾 Save Policy</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal-bg" id="modal-addProduct">
+  <div class="modal">
+    <h2>+ Add New Product</h2>
+    <div class="form-row"><label>Product Name</label><input type="text" placeholder="e.g. Rose & Oud Luxury Candle"/></div>
+    <div class="form-2">
+      <div class="form-row"><label>Category</label>
+        <select><option>Candles</option><option>Gadgets</option><option>Home</option><option>Fashion</option></select>
+      </div>
+      <div class="form-row"><label>Type</label>
+        <select><option>Own Product (Candles)</option><option>Dropshipping</option></select>
+      </div>
+    </div>
+    <div class="form-2">
+      <div class="form-row"><label>Selling Price (₹)</label><input type="number" placeholder="699"/></div>
+      <div class="form-row"><label>MRP (₹)</label><input type="number" placeholder="1200"/></div>
+    </div>
+    <div class="form-2">
+      <div class="form-row"><label>Stock Quantity</label><input type="number" placeholder="50"/></div>
+      <div class="form-row"><label>SKU</label><input type="text" placeholder="PT-CANDLE-001"/></div>
+    </div>
+    <div class="form-row"><label>Description</label><textarea placeholder="Product description for customers…"></textarea></div>
+    <div class="form-row"><label>Emoji / Icon</label><input type="text" placeholder="🕯️"/></div>
+    <div class="form-2">
+      <div class="form-row"><label>Badge</label>
+        <select><option>BESTSELLER</option><option>NEW</option><option>HOT</option><option>LIMITED</option><option>Sale %</option></select>
+      </div>
+      <div class="form-row"><label>COD Available</label>
+        <select><option>Yes ✅</option><option>No</option></select>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-sm btn-outline" onclick="closeModal('addProduct')">Cancel</button>
+      <button class="btn-sm btn-teal" onclick="addProduct()">✅ Add Product</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// DATA
+const orders=[
+  {id:'#PT-18471',cust:'Sneha Kapoor',loc:'Mumbai, MH',prod:'Rose & Oud Candle (x2)',qty:2,amt:1398,pay:'UPI',status:'Delivered',date:'11 Mar'},
+  {id:'#PT-18470',cust:'Rahul Mehta',loc:'Hyderabad, TG',prod:'Pro Earbuds',qty:1,amt:1299,pay:'COD',status:'Shipped',date:'11 Mar'},
+  {id:'#PT-18469',cust:'Priya Sharma',loc:'Jaipur, RJ',prod:'Jasmine Gift Set',qty:1,amt:1499,pay:'UPI',status:'Delivered',date:'10 Mar'},
+  {id:'#PT-18468',cust:'Arun Kumar',loc:'Chennai, TN',prod:'RGB Desk Lamp',qty:1,amt:899,pay:'Card',status:'Processing',date:'10 Mar'},
+  {id:'#PT-18467',cust:'Anjali Singh',loc:'Delhi, DL',prod:'Smart Fitness Band',qty:1,amt:2499,pay:'UPI',status:'Pending',date:'10 Mar'},
+  {id:'#PT-18466',cust:'Vikram Nair',loc:'Bangalore, KA',prod:'Lavender Candle',qty:3,amt:1647,pay:'UPI',status:'Delivered',date:'09 Mar'},
+  {id:'#PT-18465',cust:'Divya Patel',loc:'Ahmedabad, GJ',prod:'MagSafe Charger',qty:1,amt:1899,pay:'EMI',status:'Shipped',date:'09 Mar'},
+  {id:'#PT-18464',cust:'Suresh Rao',loc:'Pune, MH',prod:'Aroma Diffuser Combo',qty:1,amt:1299,pay:'COD',status:'Cancelled',date:'08 Mar'},
+  {id:'#PT-18463',cust:'Meera Iyer',loc:'Kochi, KL',prod:'Rose & Oud Candle',qty:1,amt:699,pay:'UPI',status:'Delivered',date:'08 Mar'},
+  {id:'#PT-18462',cust:'Arjun Reddy',loc:'Hyderabad, TG',prod:'Pro Earbuds',qty:2,amt:2598,pay:'Card',status:'Delivered',date:'07 Mar'},
+];
+
+const products=[
+  {em:'🕯️',name:'Rose & Oud Luxury Soy Candle',cat:'Candles',price:699,mrp:1200,stock:47,sold:842},
+  {em:'🎧',name:'Pro Wireless Earbuds – 40hr Battery',cat:'Gadgets',price:1299,mrp:2399,stock:28,sold:1241},
+  {em:'🕯️',name:'Jasmine & Sandalwood Gift Set (3pcs)',cat:'Candles',price:1499,mrp:2499,stock:19,sold:387},
+  {em:'💡',name:'RGB Smart LED Desk Lamp',cat:'Home',price:899,mrp:1450,stock:62,sold:503},
+  {em:'⌚',name:'Smart Fitness Band – AMOLED',cat:'Gadgets',price:2499,mrp:4999,stock:15,sold:2412},
+  {em:'🕯️',name:'Lavender Calm Soy Candle – 200g',cat:'Candles',price:549,mrp:899,stock:8,sold:423},
+  {em:'🔌',name:'3-in-1 MagSafe Wireless Charger',cat:'Gadgets',price:1899,mrp:4199,stock:33,sold:876},
+  {em:'🏠',name:'Aroma Diffuser + Candle Combo',cat:'Home',price:1299,mrp:2199,stock:41,sold:567},
+];
+
+const payments=[
+  {txn:'TXN20260311001',cust:'Sneha Kapoor',amt:1398,method:'UPI',status:'Success',date:'11 Mar'},
+  {txn:'TXN20260311002',cust:'Rahul Mehta',amt:1348,method:'COD',status:'Pending',date:'11 Mar'},
+  {txn:'TXN20260310001',cust:'Priya Sharma',amt:1499,method:'UPI',status:'Success',date:'10 Mar'},
+  {txn:'TXN20260310002',cust:'Arun Kumar',amt:899,method:'Card',status:'Success',date:'10 Mar'},
+  {txn:'TXN20260309001',cust:'Vikram Nair',amt:1647,method:'UPI',status:'Success',date:'09 Mar'},
+  {txn:'TXN20260309002',cust:'Divya Patel',amt:1948,method:'EMI',status:'Success',date:'09 Mar'},
+  {txn:'TXN20260308001',cust:'Suresh Rao',amt:1348,method:'COD',status:'Failed',date:'08 Mar'},
+];
+
+const customers=[
+  {name:'Sneha Kapoor',loc:'Mumbai, MH',orders:7,spent:6842,last:'11 Mar',status:'VIP'},
+  {name:'Rahul Mehta',loc:'Hyderabad, TG',orders:4,spent:3891,last:'11 Mar',status:'Active'},
+  {name:'Priya Sharma',loc:'Jaipur, RJ',orders:5,spent:5241,last:'10 Mar',status:'VIP'},
+  {name:'Arun Kumar',loc:'Chennai, TN',orders:2,spent:1798,last:'10 Mar',status:'Active'},
+  {name:'Anjali Singh',loc:'Delhi, DL',orders:3,spent:3241,last:'10 Mar',status:'Active'},
+  {name:'Vikram Nair',loc:'Bangalore, KA',orders:8,spent:8742,last:'09 Mar',status:'VIP'},
+];
+
+const invoicesData=[
+  {inv:'INV-2026-001',cust:'Sneha Kapoor',ord:'#PT-18471',amt:2100,gst:378,total:2478,date:'11 Mar'},
+  {inv:'INV-2026-002',cust:'Rahul Mehta',ord:'#PT-18470',amt:1299,gst:234,total:1533,date:'11 Mar'},
+  {inv:'INV-2026-003',cust:'Priya Sharma',ord:'#PT-18469',amt:1499,gst:270,total:1769,date:'10 Mar'},
+  {inv:'INV-2026-004',cust:'Arun Kumar',ord:'#PT-18468',amt:899,gst:162,total:1061,date:'10 Mar'},
+];
+
+// STATUS BADGE
+function badge(s){
+  const map={Delivered:'delivered',Shipped:'shipped',Pending:'pending',
+    Cancelled:'cancelled',Processing:'processing',Success:'delivered',Failed:'cancelled',
+    VIP:'hot',Active:'shipped'};
+  return `<span class="badge ${map[s]||'pending'}">${s}</span>`;
+}
+
+// RENDER TABLES
+function renderAll(){
+  // Recent orders (dashboard)
+  const ro=document.getElementById('recentOrders');
+  if(ro) ro.innerHTML=orders.slice(0,5).map(o=>`
+    <tr><td><b style="font-family:'Syne',sans-serif">${o.id}</b></td>
+    <td>${o.cust}</td><td>${o.prod}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${o.amt.toLocaleString('en-IN')}</td>
+    <td>${badge(o.pay)}</td><td>${badge(o.status)}</td><td>${o.date}</td></tr>`).join('');
+  // All orders
+  const ot=document.getElementById('ordersTable');
+  if(ot) ot.innerHTML=orders.map(o=>`
+    <tr><td><b style="font-family:'Syne',sans-serif">${o.id}</b></td>
+    <td>${o.cust}</td><td style="font-size:.76rem;color:var(--gray)">${o.loc}</td>
+    <td style="font-size:.8rem">${o.prod}</td><td>${o.qty}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${o.amt.toLocaleString('en-IN')}</td>
+    <td>${badge(o.pay)}</td><td>${badge(o.status)}</td><td>${o.date}</td>
+    <td><div class="td-actions"><div class="act-btn">View</div><div class="act-btn" onclick="showInvoice('${o.id}')">Invoice</div></div></td></tr>`).join('');
+  // Products
+  const pt=document.getElementById('productsTable');
+  if(pt) pt.innerHTML=products.map((p,i)=>`
+    <tr><td><div class="prod-thumb">
+      <div class="pt-img" style="background:${['linear-gradient(135deg,#1a0800,#3d1500)','linear-gradient(135deg,#050d20,#112240)','linear-gradient(135deg,#0d1400,#1e2e00)'][i%3]}">${p.em}</div>
+      <div><div class="pt-name">${p.name}</div><div class="pt-cat">${p.cat==='Candles'?'🕯️ Own Product':'📦 Dropship'}</div></div>
+    </div></td>
+    <td><span class="badge ${p.cat==='Candles'?'hot':p.cat==='Gadgets'?'shipped':'processing'}">${p.cat}</span></td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${p.price.toLocaleString('en-IN')}</td>
+    <td><span class="price-inr" style="color:var(--gray);text-decoration:line-through">${p.mrp.toLocaleString('en-IN')}</span></td>
+    <td><span style="color:${p.stock<15?'var(--red)':p.stock<30?'var(--saff)':'var(--green)'};font-family:'Syne',sans-serif;font-weight:700">${p.stock}</span>
+      <div class="stock-bar"><div class="stock-fill" style="width:${Math.min(p.stock*2,100)}%;background:${p.stock<15?'var(--red)':p.stock<30?'var(--saff)':'var(--teal)'}"></div></div></td>
+    <td style="font-family:'Syne',sans-serif;font-weight:600;color:var(--teal)">${p.sold.toLocaleString()}</td>
+    <td><span class="badge delivered">Active</span></td>
+    <td><div class="td-actions"><div class="act-btn">Edit</div><div class="act-btn red">Delete</div></div></td></tr>`).join('');
+  // Payments
+  const pyt=document.getElementById('paymentsTable');
+  if(pyt) pyt.innerHTML=payments.map(p=>`
+    <tr><td style="font-family:'Syne',sans-serif;font-size:.78rem">${p.txn}</td>
+    <td>${p.cust}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${p.amt.toLocaleString('en-IN')}</td>
+    <td>${badge(p.method)}</td><td>${badge(p.status)}</td><td>${p.date}</td>
+    <td><div class="td-actions"><div class="act-btn">Receipt</div></div></td></tr>`).join('');
+  // Customers
+  const ct=document.getElementById('customersTable');
+  if(ct) ct.innerHTML=customers.map(c=>`
+    <tr><td style="font-family:'Syne',sans-serif;font-weight:700">${c.name}</td>
+    <td style="color:var(--gray);font-size:.8rem">${c.loc}</td>
+    <td style="font-family:'Syne',sans-serif;font-weight:700">${c.orders}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${c.spent.toLocaleString('en-IN')}</td>
+    <td>${c.last}</td><td>${badge(c.status)}</td></tr>`).join('');
+  // Invoices
+  const it=document.getElementById('invoicesTable');
+  if(it) it.innerHTML=invoicesData.map(i=>`
+    <tr><td style="font-family:'Syne',sans-serif;font-weight:700;color:var(--teal)">${i.inv}</td>
+    <td>${i.cust}</td><td style="font-family:'Syne',sans-serif">${i.ord}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:700">${i.amt.toLocaleString('en-IN')}</td>
+    <td style="color:var(--gray)" class="price-inr">${i.gst.toLocaleString('en-IN')}</td>
+    <td class="price-inr" style="font-family:'Syne',sans-serif;font-weight:800;color:var(--teal)">${i.total.toLocaleString('en-IN')}</td>
+    <td>${i.date}</td>
+    <td><div class="td-actions"><div class="act-btn" onclick="showInvoice('${i.inv}')">View</div><div class="act-btn">Print</div></div></td></tr>`).join('');
+}
+
+// REVENUE CHART
+function buildChart(){
+  const data=[28400,31200,24800,38500,42100,29700,36200];
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const max=Math.max(...data);
+  const chart=document.getElementById('revenueChart');
+  const labels=document.getElementById('revenueLabels');
+  if(!chart)return;
+  chart.innerHTML=data.map((v,i)=>`
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+      <div class="bar${i===4?' active':''}" style="height:${(v/max*100)}%;background:${i===4?'rgba(0,229,200,.3)':'rgba(0,229,200,.15)'}"></div>
+    </div>`).join('');
+  labels.innerHTML=days.map((d,i)=>`<div class="bar-lbl" style="flex:1;text-align:center">${d}</div>`).join('');
+}
+
+// PANEL NAVIGATION
+function showPanel(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el){el.classList.add('active');}
+  else{
+    document.querySelectorAll('.sb-item').forEach(i=>{
+      if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes("'"+name+"'"))i.classList.add('active');
+    });
+  }
+  const titles={dashboard:'📊 Dashboard',orders:'📦 Orders',products:'🏪 Products',
+    invoices:'🧾 Invoices',payments:'💳 Payments',gateway:'🔐 Payment Gateway',
+    customers:'👥 Customers',reviews:'⭐ Reviews',customize:'🎨 Customization',
+    settings:'⚙️ Settings',shipping:'🚚 Shipping & Returns'};
+  document.getElementById('pageTitle').textContent=titles[name]||name;
+}
+
+function showInvoice(id){
+  showPanel('invoices',null);
+  document.getElementById('invoicePreview').style.display='block';
+  document.getElementById('invoicePreview').scrollIntoView({behavior:'smooth'});
+}
+
+// MODAL
+function openModal(id){document.getElementById('modal-'+id).classList.add('open')}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open')}
+function addProduct(){closeModal('addProduct');alert('✅ Product added successfully!');}
+
+// FILTER ORDERS
+function filterOrders(q){
+  const rows=document.querySelectorAll('#ordersTable tr');
+  rows.forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'});
+}
+function filterByStatus(s){
+  const rows=document.querySelectorAll('#ordersTable tr');
+  rows.forEach(r=>{r.style.display=(!s||r.textContent.includes(s))?'':'none'});
+}
+
+// EXPORT CSV
+function exportCSV(){
+  const rows=[['Order ID','Customer','Location','Product','Amount','Payment','Status','Date'],...orders.map(o=>[o.id,o.cust,o.loc,o.prod,o.amt,o.pay,o.status,o.date])];
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='paanitrendzz_orders.csv';a.click();
+}
+
+function setColor(el,c){
+  el.parentElement.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// DATE
+document.getElementById('dateNow').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+
+// INIT
+renderAll();buildChart();
+</script>
+</body>
+</html>
